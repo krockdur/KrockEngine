@@ -517,12 +517,20 @@
 1769494029 source:/home/krock/Dev/KrockEngine/KrockEngine/src/Tile.cpp
 	"Tile.h"
 
-1769494029 /home/krock/Dev/KrockEngine/KrockEngine/src/Tile.h
+1769517672 /home/krock/Dev/KrockEngine/KrockEngine/src/Tile.h
+	<SFML/Graphics.hpp>
 
 1769494029 source:/home/krock/Dev/KrockEngine/KrockEngine/src/Map.cpp
 	"Map.h"
 
-1769502656 /home/krock/Dev/KrockEngine/KrockEngine/src/Map.h
-	<vector>
+1769515304 /home/krock/Dev/KrockEngine/KrockEngine/src/Map.h
+	<list>
 	"Tile.h"
+
+1769518117 source:/home/krock/Dev/KrockEngine/KrockEngine/src/Sprite.cpp
+	"Sprite.h"
+
+1769519134 /home/krock/Dev/KrockEngine/KrockEngine/src/Sprite.h
+	<SFML/Graphics.hpp>
+	<string>
 
