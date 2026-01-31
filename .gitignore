@@ -1,8 +1,3 @@
-#codeblock
-
-*.cbp
-*.depend
-*.layout
-src/bin/
-src/obj/
+kengine/.idea
+kengine/cmake-build-debug
 
