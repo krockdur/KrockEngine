@@ -20,8 +20,10 @@ add_executable(kengine src/sources/main.cpp
         src/sources/Sprite.cpp
         src/headers/Sprite.h
         src/sources/Tile.cpp
-        src/headers/Tile.h)
-target_include_directories(kengine PRIVATE include/)
+        src/headers/Tile.h
+        src/sources/Game.cpp
+        src/headers/Game.h)
+#target_include_directories(kengine PRIVATE include/)
 target_compile_features(kengine PRIVATE cxx_std_17)
 target_link_libraries(kengine PRIVATE SFML::Graphics)
 
