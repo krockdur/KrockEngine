@@ -3,3 +3,23 @@
 //
 
 #include "../headers/Game.h"
+
+Game::Game() {
+
+}
+
+Game::~Game() {
+
+}
+
+void Game::init() {
+
+}
+
+void Game::update() {
+
+}
+
+void Game::draw() {
+
+}

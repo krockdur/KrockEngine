@@ -4,16 +4,19 @@
 
 #ifndef KENGINE_GAME_H
 #define KENGINE_GAME_H
-#include "../../cmake-build-debug/_deps/freetype-src/include/freetype/ttnameid.h"
 
 
 class Game {
-    public:
+
+public:
     Game();
+    virtual ~Game();
 
     void init();
     void update();
     void draw();
+
+    private:
 };
 
 

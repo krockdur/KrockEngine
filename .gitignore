@@ -1,3 +1,6 @@
-kengine/.idea
-kengine/cmake-build-debug
+/kengine/.idea
+/kengine/cmake-build-debug
+
+*.DS_Store
+
 
