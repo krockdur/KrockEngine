@@ -22,7 +22,9 @@ add_executable(kengine src/sources/main.cpp
         src/sources/Tile.cpp
         src/headers/Tile.h
         src/sources/Game.cpp
-        src/headers/Game.h)
+        src/headers/Game.h
+        src/sources/ScreenManager.cpp
+        src/headers/ScreenManager.h)
 #target_include_directories(kengine PRIVATE include/)
 target_compile_features(kengine PRIVATE cxx_std_17)
 target_link_libraries(kengine PRIVATE SFML::Graphics)
