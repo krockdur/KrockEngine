@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../headers/ConfigGame.h"
+#include "ConfigGame.h"
 
 class ScreenManager {
 

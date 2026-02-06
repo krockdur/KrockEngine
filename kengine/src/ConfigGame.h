@@ -12,6 +12,6 @@ public:
     static std::string title;
 };
 
-std::string Config::title = "My Game";
+
 
 #endif //KENGINE_CONFIGGAME_H

@@ -2,7 +2,7 @@
 // Created by JF on 04/02/2026.
 //
 
-#include "../headers/ScreenManager.h"
+#include "ScreenManager.h"
 
 #include <iostream>
 
@@ -35,12 +35,15 @@ void ScreenManager::update(sf::Time elapsed_time) {
 
     //Pour test
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
+        std::cout<<"select menu"<<std::endl;
         screen_state = menu;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) {
+        std::cout<<"select play"<<std::endl;
         screen_state = play;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+        std::cout<<"select score"<<std::endl;
         screen_state = score;
     }
 

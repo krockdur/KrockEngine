@@ -12,21 +12,21 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(kengine src/sources/main.cpp
-        src/sources/Atlas.cpp
-        src/headers/Atlas.h
-        src/sources/Map.cpp
-        src/headers/Map.h
-        src/sources/Sprite.cpp
-        src/headers/Sprite.h
-        src/sources/Tile.cpp
-        src/headers/Tile.h
-        src/sources/Game.cpp
-        src/headers/Game.h
-        src/sources/ScreenManager.cpp
-        src/headers/ScreenManager.h
-        src/headers/ConfigGame.h
-        src/sources/ConfigGame.cpp)
+add_executable(kengine src/main.cpp
+        src/Atlas.cpp
+        src/Atlas.h
+        src/Map.cpp
+        src/Map.h
+        src/Sprite.cpp
+        src/Sprite.h
+        src/Tile.cpp
+        src/Tile.h
+        src/ScreenManager.cpp
+        src/ScreenManager.h
+        src/ConfigGame.h
+        src/ConfigGame.cpp
+        src/Game.cpp
+        src/Game.h)
 #target_include_directories(kengine PRIVATE include/)
 target_compile_features(kengine PRIVATE cxx_std_17)
 target_link_libraries(kengine PRIVATE SFML::Graphics)
