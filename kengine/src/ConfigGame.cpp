@@ -6,3 +6,5 @@
 
 
 std::string Config::title = "My Game";
+unsigned int Config::SCREEN_WIDTH = 800u;
+unsigned int Config::SCREEN_HEIGHT = 600u;

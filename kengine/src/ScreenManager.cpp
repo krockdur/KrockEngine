@@ -22,10 +22,11 @@ void ScreenManager::init() {
     screen_state = menu;
 
     const sf::VideoMode desktop_resolution = sf::VideoMode::getDesktopMode();
-    game_window.create( desktop_resolution, Config::title );
-    game_window.setPosition({0, 0});
+    //game_window.create( desktop_resolution, Config::title );
+    game_window.create(sf::VideoMode({Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT}), Config::title );
+    //game_window.setPosition({0, 0});
     game_window.setFramerateLimit(60);
-    game_window.setMouseCursorGrabbed(true);
+    //game_window.setMouseCursorGrabbed(true);
     sf::Mouse::setPosition( {100, 200}, game_window);
 
 
@@ -33,7 +34,6 @@ void ScreenManager::init() {
 
 void ScreenManager::update(sf::Time elapsed_time) {
 
-    //Pour test
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
         std::cout<<"select menu"<<std::endl;
         screen_state = menu;
@@ -81,8 +81,17 @@ void ScreenManager::run() {
     {
         while (const std::optional event = game_window.pollEvent())
         {
-            if (event->is<sf::Event::Closed>())
+            if (event->is<sf::Event::Closed>()) {
                 game_window.close();
+                break;
+            }
+            //Pour test
+            if (const auto* keyPress = event->getIf<sf::Event::KeyPressed>()){
+                if (keyPress->code == sf::Keyboard::Key::Escape)
+                {
+                    std::cout<<"escape"<<std::endl;
+                }
+            }
 
             sf::Clock clock;
             update( clock.getElapsedTime() );

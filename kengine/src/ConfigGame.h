@@ -10,6 +10,8 @@
 class Config {
 public:
     static std::string title;
+    static unsigned int SCREEN_WIDTH;
+    static unsigned int SCREEN_HEIGHT;
 };
 
 
