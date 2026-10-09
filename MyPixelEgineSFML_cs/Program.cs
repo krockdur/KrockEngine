@@ -57,7 +57,7 @@ internal class SimpleWindow
         };
 
         // Start the game loop
-        Time elapsedTIme = Time.Zero;
+        //Time elapsedTIme = Time.Zero;
         while (window.IsOpen)
         {
             // Process events
@@ -87,8 +87,8 @@ internal class SimpleWindow
             circle.Position += new Vector2f(direction_x * speed, direction_y * speed);
 
 
-            elapsedTIme = new Clock().ElapsedTime;
-            Console.WriteLine("Elapsed time : " + elapsedTIme.AsMicroseconds().ToString());
+            Clock clock = new Clock();
+
 
             window.Clear(Color.White);
 
@@ -101,6 +101,11 @@ internal class SimpleWindow
 
             // Finally, display the rendered frame on screen
             window.Display();
+
+
+
+            Time elapsedTIme = clock.ElapsedTime;
+            Console.WriteLine("Elapsed time : " + elapsedTIme.AsMicroseconds().ToString());
 
         }
     }

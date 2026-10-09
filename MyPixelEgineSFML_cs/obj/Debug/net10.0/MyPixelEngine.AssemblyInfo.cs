@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyPixelEngine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f830e795cbcf842ecdfe9c875c855776619aba33")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4d69fab44dad1134a18ce095fd6e2ef64de25e25")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyPixelEngine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyPixelEngine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
