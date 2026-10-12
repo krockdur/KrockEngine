@@ -10,7 +10,7 @@ namespace MyMGPixelEngine;
 public class Game1 : Game
 {
     const int WINDOW_WIDTH = 100;
-    const int WINDOW_HEIGHT = 50;
+    const int WINDOW_HEIGHT = 100;
     const int scale = 5;
 
     private GraphicsDeviceManager _graphics;
@@ -48,6 +48,7 @@ public class Game1 : Game
 
     int pos_pixel_x, pos_pixel_y = 0;
     double time_elapsed = 0;
+    Color activeColor = Color.White;
 
     protected override void Update(GameTime gameTime)
     {
@@ -55,6 +56,27 @@ public class Game1 : Game
             Exit();
 
         // TODO: Add your update logic here
+
+        if (Keyboard.GetState().IsKeyDown(Keys.D1))
+        {
+            activeColor = Color.Red;
+        }
+        else if (Keyboard.GetState().IsKeyDown(Keys.D2))
+        {
+            activeColor = Color.Green;
+        }
+        else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+        {
+            activeColor = Color.Blue;
+        }
+        else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+        {
+            activeColor = Color.White;
+        }
+        else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+        {
+            activeColor = Color.Yellow;
+        }
 
         MouseState mouseState = Mouse.GetState();
 
@@ -65,25 +87,17 @@ public class Game1 : Game
 
         if (time_elapsed >= 66)
         {
-            pos_pixel_x = pos_pixel_x + 4;
-            if (pos_pixel_x >= WINDOW_WIDTH)
-            {
-                pos_pixel_x = 0;
-                pos_pixel_y++;
-                if (pos_pixel_y >= WINDOW_HEIGHT)
-                {
-                    pos_pixel_y = 0;
-                }
-            }
+            framebuffer.UpdateGravity();
             time_elapsed = 0;
         }
 
 
         if (mouseState.LeftButton == ButtonState.Pressed)
         {
-            framebuffer.SetPixel(mouseState.Position.X, mouseState.Position.Y, Color.White);
+            framebuffer.SetPixel(mouseState.Position.X / scale, mouseState.Position.Y / scale, activeColor);
         }
 
+        Debug.WriteLine($"Mouse X: {mouseState.Position.X.ToString()} | Mouse Y: {mouseState.Position.Y.ToString()}");
 
         //framebuffer.Clear(Color.Black);
 

@@ -1,14 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\Dev\\monogame\\MyMGPixelEngine\\",
+  "WorkspaceRootPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|f:\\dev\\monogame\\mymgpixelengine\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|d:\\dev\\krockengine\\mymgpixelengine\\framebuffer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|solutionrelative:framebuffer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|d:\\dev\\krockengine\\mymgpixelengine\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|f:\\dev\\monogame\\mymgpixelengine\\framebuffer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{57245914-AD2C-C632-BBE7-023BB3C42933}|MyMGPixelEngine.csproj|solutionrelative:framebuffer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\JF\\.copilot\\plans\\plan-ajout-de-gravit-pour-les-pixels-jaunes-dans-framebuffer.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|MarkdownSecurePreview"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,31 +21,54 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FrameBuffer.cs",
-              "DocumentMoniker": "F:\\Dev\\monogame\\MyMGPixelEngine\\FrameBuffer.cs",
-              "RelativeDocumentMoniker": "FrameBuffer.cs",
-              "ToolTip": "F:\\Dev\\monogame\\MyMGPixelEngine\\FrameBuffer.cs",
-              "RelativeToolTip": "FrameBuffer.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAewDIAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-10T06:20:45.681Z"
+              "DocumentIndex": 2,
+              "Title": "plan-ajout-de-gravit-pour-les-pixels-jaunes-dans-framebuffer.md [Pr\u00E9version]",
+              "DocumentMoniker": "C:\\Users\\JF\\.copilot\\plans\\plan-ajout-de-gravit-pour-les-pixels-jaunes-dans-framebuffer.md",
+              "ToolTip": "C:\\Users\\JF\\.copilot\\plans\\plan-ajout-de-gravit-pour-les-pixels-jaunes-dans-framebuffer.md [Pr\u00E9version]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-10-12T09:23:44.692Z",
+              "EditorCaption": " [Pr\u00E9version]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Game1.cs",
-              "DocumentMoniker": "F:\\Dev\\monogame\\MyMGPixelEngine\\Game1.cs",
-              "RelativeDocumentMoniker": "Game1.cs",
-              "ToolTip": "F:\\Dev\\monogame\\MyMGPixelEngine\\Game1.cs",
-              "RelativeToolTip": "Game1.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAmwFAAAAAAAAAAAAAAAA==",
+              "Title": "FrameBuffer.cs",
+              "DocumentMoniker": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\FrameBuffer.cs",
+              "RelativeDocumentMoniker": "FrameBuffer.cs",
+              "ToolTip": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\FrameBuffer.cs",
+              "RelativeToolTip": "FrameBuffer.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAuwEsAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-10T06:10:07.988Z",
+              "WhenOpened": "2026-10-12T09:14:23.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Game1.cs",
+              "DocumentMoniker": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\Game1.cs",
+              "RelativeDocumentMoniker": "Game1.cs",
+              "ToolTip": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\Game1.cs",
+              "RelativeToolTip": "Game1.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAswFkAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T06:07:23.058Z",
               "EditorCaption": ""
             }
           ]

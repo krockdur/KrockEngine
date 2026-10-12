@@ -310,19 +310,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\krock\\.nuget\\packages\\": {}
+    "C:\\Users\\JF\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Dev\\monogame\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
+      "projectUniqueName": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
       "projectName": "MyMGPixelEngine",
-      "projectPath": "F:\\Dev\\monogame\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
-      "packagesPath": "C:\\Users\\krock\\.nuget\\packages\\",
-      "outputPath": "F:\\Dev\\monogame\\MyMGPixelEngine\\obj\\",
+      "projectPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
+      "packagesPath": "C:\\Users\\JF\\.nuget\\packages\\",
+      "outputPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\krock\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\JF\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -330,7 +335,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
