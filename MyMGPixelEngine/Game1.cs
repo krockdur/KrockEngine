@@ -19,6 +19,9 @@ public class Game1 : Game
     private FrameBuffer framebuffer;
 
 
+    PixelMap myPicture;
+    
+
 
     public Game1()
     {
@@ -33,6 +36,8 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
 
+        myPicture = new PixelMap(@"pictures/test");
+
         base.Initialize();
     }
 
@@ -41,14 +46,13 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-
         framebuffer = new FrameBuffer(GraphicsDevice, WINDOW_WIDTH, WINDOW_HEIGHT);
-        framebuffer.Clear(Color.Black);
+        framebuffer.Clear();
     }
 
     int pos_pixel_x, pos_pixel_y = 0;
     double time_elapsed = 0;
-    Color activeColor = Color.White;
+    int activeColor = ColorList.White;
 
     protected override void Update(GameTime gameTime)
     {
@@ -59,35 +63,33 @@ public class Game1 : Game
 
         if (Keyboard.GetState().IsKeyDown(Keys.D1))
         {
-            activeColor = Color.Red;
+            activeColor = ColorList.White;
         }
         else if (Keyboard.GetState().IsKeyDown(Keys.D2))
         {
-            activeColor = Color.Green;
+            activeColor = ColorList.Red;
         }
         else if (Keyboard.GetState().IsKeyDown(Keys.D3))
         {
-            activeColor = Color.Blue;
+            activeColor = ColorList.Blue;
         }
         else if (Keyboard.GetState().IsKeyDown(Keys.D4))
         {
-            activeColor = Color.White;
+            activeColor = ColorList.Yellow;
         }
         else if (Keyboard.GetState().IsKeyDown(Keys.D5))
         {
-            activeColor = Color.Yellow;
+            activeColor = ColorList.Black;
+
         }
 
         MouseState mouseState = Mouse.GetState();
-
-
-
 
         time_elapsed = gameTime.ElapsedGameTime.TotalMilliseconds + time_elapsed;
 
         if (time_elapsed >= 66)
         {
-            framebuffer.UpdateGravity();
+            //framebuffer.UpdateGravity();
             time_elapsed = 0;
         }
 
@@ -97,18 +99,9 @@ public class Game1 : Game
             framebuffer.SetPixel(mouseState.Position.X / scale, mouseState.Position.Y / scale, activeColor);
         }
 
-        Debug.WriteLine($"Mouse X: {mouseState.Position.X.ToString()} | Mouse Y: {mouseState.Position.Y.ToString()}");
-
-        //framebuffer.Clear(Color.Black);
-
-        //framebuffer.SetPixel(pos_pixel_x, pos_pixel_y, Color.Red);
-        //framebuffer.SetPixel(pos_pixel_x - 1, pos_pixel_y, Color.Red);
-        //framebuffer.SetPixel(pos_pixel_x - 2, pos_pixel_y, Color.Red);
-        //framebuffer.SetPixel(pos_pixel_x - 3, pos_pixel_y, Color.Red);
-
+        framebuffer.addPicture(WINDOW_WIDTH-16, WINDOW_HEIGHT-15, myPicture);
 
         framebuffer.Upload();
-
 
         base.Update(gameTime);
     }

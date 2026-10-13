@@ -13,7 +13,8 @@ namespace MyMGPixelEngine
         public readonly int Width;
         public readonly int Height;
 
-        private readonly Color[] pixels;
+        private readonly Color[] pixels;    // Tableau de pixels à rendre
+        private readonly int[] pixelsCopy;  // Copie du tableau de pixels à rendre
         private readonly Texture2D texture;
 
         public Texture2D Texture => texture;
@@ -24,31 +25,50 @@ namespace MyMGPixelEngine
             Height = height;
 
             pixels = new Color[width * height];
+            pixelsCopy = new int[width * height];
+
             texture = new Texture2D(graphicsDevice, width, height);
         }
 
-        public void Clear(Color color)
+        public void Clear()
         {
-            Array.Fill(pixels, color);
-            Array.Fill(pixels, Color.Transparent);
+            Array.Fill(pixelsCopy, ColorList.Black);  // Remplir le tableau de pixels avec le pixel de fond
         }
 
-        public void SetPixel(int x, int y, Color color)
+        public void SetPixel(int x, int y, int color)
         {
             if (x < 0 || y < 0 || x >= Width || y >= Height)
                 return;
 
-            pixels[y * Width + x] = color;
+            pixelsCopy[y * Width + x] = color;
         }
 
-        public Color GetPixel(int x, int y)
+        public int GetPixel(int x, int y)
         {
-            return pixels[y * Width + x];
+            return pixelsCopy[y * Width + x];
+        }
+
+        public void addPicture(int positionX, int positionY, PixelMap picture)
+        {
+            for (int y = 0; y < picture.Height; y++)
+            {
+                for (int x = 0; x < picture.Width; x++)
+                {
+                    int destX = x + positionX;
+                    int destY = y + positionY;
+
+                    if (destX >= 0 && destX < Width && destY >= 0 && destY < Height)
+                    {
+                        pixelsCopy[destY * Width + destX] = picture.getPicture()[y, x];
+                    }
+                }
+            }
         }
 
         public void Upload()
         {
-            texture.SetData(pixels);
+
+            texture.SetData(BufferToPixels(pixelsCopy));
         }
 
         /// <summary>
@@ -56,29 +76,203 @@ namespace MyMGPixelEngine
         /// en les faisant tomber dans des pixels égaux à emptyColor. Balayage de bas en haut
         /// pour éviter double-déplacement.
         /// </summary>
-        public void UpdateGravity(Color fallingColor, Color emptyColor)
+
+        public void UpdateSandGravity(int fallingColor, int emptyColor)
         {
-            // Vérifiez si la hauteur est suffisante pour que les pixels puissent tomber
             if (Height <= 1)
                 return;
 
-            // Déplacez les pixels égaux à fallingColor vers le bas (1 pixel par frame)
-            // en les faisant tomber dans des pixels égaux à emptyColor.
-            // Balayage de bas en haut pour éviter double-déplacement.
-            for (int y = Height - 2; y >= 0; y--)   
+            Random rnd = Random.Shared;
+
+            for (int y = Height - 2; y >= 0; y--)
             {
                 int rowOffset = y * Width;
                 int belowOffset = (y + 1) * Width;
+
                 for (int x = 0; x < Width; x++)
                 {
                     int idx = rowOffset + x;
-                    if (pixels[idx] == fallingColor)
+
+                    if (pixelsCopy[idx] != fallingColor)
+                        continue;
+
+                    int downIdx = belowOffset + x;
+
+                    // Chute verticale
+                    if (pixelsCopy[downIdx] == emptyColor)
                     {
-                        int bIdx = belowOffset + x;
-                        if (pixels[bIdx] == emptyColor)
+                        pixelsCopy[downIdx] = fallingColor;
+                        pixelsCopy[idx] = emptyColor;
+                        continue;
+                    }
+
+                    // Ordre aléatoire gauche/droite
+                    bool tryLeftFirst = rnd.Next(2) == 0;
+
+                    if (tryLeftFirst)
+                    {
+                        // Bas-gauche
+                        if (x > 0)
                         {
-                            pixels[bIdx] = fallingColor;
-                            pixels[idx] = emptyColor;
+                            int downLeft = belowOffset + x - 1;
+                            if (pixelsCopy[downLeft] == emptyColor)
+                            {
+                                pixelsCopy[downLeft] = fallingColor;
+                                pixelsCopy[idx] = emptyColor;
+                                continue;
+                            }
+                        }
+
+                        // Bas-droite
+                        if (x < Width - 1)
+                        {
+                            int downRight = belowOffset + x + 1;
+                            if (pixelsCopy[downRight] == emptyColor)
+                            {
+                                pixelsCopy[downRight] = fallingColor;
+                                pixelsCopy[idx] = emptyColor;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Bas-droite
+                        if (x < Width - 1)
+                        {
+                            int downRight = belowOffset + x + 1;
+                            if (pixelsCopy[downRight] == emptyColor)
+                            {
+                                pixelsCopy[downRight] = fallingColor;
+                                pixelsCopy[idx] = emptyColor;
+                                continue;
+                            }
+                        }
+
+                        // Bas-gauche
+                        if (x > 0)
+                        {
+                            int downLeft = belowOffset + x - 1;
+                            if (pixelsCopy[downLeft] == emptyColor)
+                            {
+                                pixelsCopy[downLeft] = fallingColor;
+                                pixelsCopy[idx] = emptyColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void UpdateWaterGravity(int waterColor, int emptyColor)
+        {
+            if (Height <= 1)
+                return;
+
+            Random rnd = Random.Shared;
+
+            for (int y = Height - 2; y >= 0; y--)
+            {
+                int rowOffset = y * Width;
+                int belowOffset = (y + 1) * Width;
+
+                for (int x = 0; x < Width; x++)
+                {
+                    int idx = rowOffset + x;
+
+                    if (pixelsCopy[idx] != waterColor)
+                        continue;
+
+                    // 1. Chute verticale
+                    int down = belowOffset + x;
+
+                    if (pixelsCopy[down] == emptyColor)
+                    {
+                        pixelsCopy[down] = waterColor;
+                        pixelsCopy[idx] = emptyColor;
+                        continue;
+                    }
+
+                    bool leftFirst = rnd.Next(2) == 0;
+
+                    // 2. Diagonales descendantes
+                    if (leftFirst)
+                    {
+                        if (x > 0)
+                        {
+                            int downLeft = belowOffset + x - 1;
+                            if (pixelsCopy[downLeft] == emptyColor)
+                            {
+                                pixelsCopy[downLeft] = waterColor;
+                                pixelsCopy[idx] = emptyColor;
+                                continue;
+                            }
+                        }
+
+                        if (x < Width - 1)
+                        {
+                            int downRight = belowOffset + x + 1;
+                            if (pixelsCopy[downRight] == emptyColor)
+                            {
+                                pixelsCopy[downRight] = waterColor;
+                                pixelsCopy[idx] = emptyColor;
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (x < Width - 1)
+                        {
+                            int downRight = belowOffset + x + 1;
+                            if (pixelsCopy[downRight] == emptyColor)
+                            {
+                                pixelsCopy[downRight] = waterColor;
+                                pixelsCopy[idx] = emptyColor;
+                                continue;
+                            }
+                        }
+
+                        if (x > 0)
+                        {
+                            int downLeft = belowOffset + x - 1;
+                            if (pixelsCopy[downLeft] == emptyColor)
+                            {
+                                pixelsCopy[downLeft] = waterColor;
+                                pixelsCopy[idx] = emptyColor;
+                                continue;
+                            }
+                        }
+                    }
+
+                    // 3. Écoulement horizontal
+                    if (leftFirst)
+                    {
+                        if (x > 0 && pixelsCopy[idx - 1] == emptyColor)
+                        {
+                            pixelsCopy[idx - 1] = waterColor;
+                            pixelsCopy[idx] = emptyColor;
+                            continue;
+                        }
+
+                        if (x < Width - 1 && pixelsCopy[idx + 1] == emptyColor)
+                        {
+                            pixelsCopy[idx + 1] = waterColor;
+                            pixelsCopy[idx] = emptyColor;
+                        }
+                    }
+                    else
+                    {
+                        if (x < Width - 1 && pixelsCopy[idx + 1] == emptyColor)
+                        {
+                            pixelsCopy[idx + 1] = waterColor;
+                            pixelsCopy[idx] = emptyColor;
+                            continue;
+                        }
+
+                        if (x > 0 && pixelsCopy[idx - 1] == emptyColor)
+                        {
+                            pixelsCopy[idx - 1] = waterColor;
+                            pixelsCopy[idx] = emptyColor;
                         }
                     }
                 }
@@ -90,7 +284,9 @@ namespace MyMGPixelEngine
         /// </summary>
         public void UpdateGravity()
         {
-            UpdateGravity(Color.Yellow, Color.Transparent);
+            UpdateSandGravity(ColorList.Yellow, ColorList.Black);
+            UpdateWaterGravity(ColorList.Blue, ColorList.Black);
+
         }
 
         public Color[] BufferToPixels(int[] mapbuffer)
@@ -100,19 +296,19 @@ namespace MyMGPixelEngine
             {
                 switch (mapbuffer[i])
                 {
-                    case 0:
-                        pixels[i] = Color.Transparent;
+                    case ColorList.Black:
+                        pixels[i] = Color.Black;
                         break;
-                    case 1:
+                    case ColorList.White:
                         pixels[i] = Color.White;
                         break;
-                    case 2:
+                    case ColorList.Red:
                         pixels[i] = Color.Red;
                         break;
-                    case 3:
+                    case ColorList.Blue:
                         pixels[i] = Color.Blue;
                         break;
-                    case 4:
+                    case ColorList.Yellow:
                         pixels[i] = Color.Yellow;
                         break;
                 }

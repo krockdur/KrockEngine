@@ -310,24 +310,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\JF\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\krock\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
+      "projectUniqueName": "F:\\Dev\\KrockEngine\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
       "projectName": "MyMGPixelEngine",
-      "projectPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
-      "packagesPath": "C:\\Users\\JF\\.nuget\\packages\\",
-      "outputPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine\\obj\\",
+      "projectPath": "F:\\Dev\\KrockEngine\\MyMGPixelEngine\\MyMGPixelEngine.csproj",
+      "packagesPath": "C:\\Users\\krock\\.nuget\\packages\\",
+      "outputPath": "F:\\Dev\\KrockEngine\\MyMGPixelEngine\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\JF\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\krock\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -335,6 +330,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -354,7 +350,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.400"
+      "SdkAnalysisLevel": "11.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -386,7 +382,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\11.0.100-rc.1.26425.128/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
