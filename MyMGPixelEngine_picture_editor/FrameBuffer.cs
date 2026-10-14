@@ -65,6 +65,35 @@ namespace MyMGPixelEngine
             }
         }
 
+        public void addCar(char c, int positionX, int positionY, uint color)
+        {
+            if (!Font.Font5x7.TryGetValue(c, out var glyph))
+                return;
+
+            for (int y = 0; y < 7; y++)
+            {
+                bool[] bits = new bool[8];
+
+                for (int i = 0; i < 8; i++)
+                {
+                    bits[i] = (glyph[y] & (1 << i)) != 0;
+                }
+
+                for (int x = 0; x < 5; x++)
+                {
+                    int destX = x + positionX;
+                    int destY = y + positionY;
+
+                    if (destX >= 0 && destX < Width && destY >= 0 && destY < Height)
+                    {
+                        int tmpPix = 0;
+                        if (bits[x] == true) tmpPix = 1;
+                        pixelsCopy[destY * Width + destX] = tmpPix;
+                    }
+                }
+            }
+        }
+
         public void Upload()
         {
 
