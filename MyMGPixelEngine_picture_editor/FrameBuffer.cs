@@ -65,7 +65,7 @@ namespace MyMGPixelEngine
             }
         }
 
-        public void addCar(char c, int positionX, int positionY, uint color)
+        public void AddCar(char c, int positionX, int positionY, int color)
         {
             if (!Font.Font5x7.TryGetValue(c, out var glyph))
                 return;
@@ -91,6 +91,14 @@ namespace MyMGPixelEngine
                         pixelsCopy[destY * Width + destX] = tmpPix;
                     }
                 }
+            }
+        }
+
+        public void AddText(string text, int positionX, int positionY, int color)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                AddCar(text[i], positionX + i * 6, positionY, ColorList.Blue);
             }
         }
 

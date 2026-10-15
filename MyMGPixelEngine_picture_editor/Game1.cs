@@ -94,13 +94,7 @@ public class Game1 : Game
             framebuffer.SetPixel(mouseState.Position.X / scale, mouseState.Position.Y / scale, activeColor);
         }
 
-        framebuffer.addCar('H', 10, 10, 0);
-        framebuffer.addCar('E', 16, 10, 0);
-        framebuffer.addCar('L', 22, 10, 0);
-        framebuffer.addCar('L', 27, 10, 0);
-        framebuffer.addCar('O', 33, 10, 0);
-        
-        framebuffer.addCar('B', 10, 20, 0);
+        framebuffer.AddText("HELLO TOUT LE MONDE", 10, 10, ColorList.Blue);
 
         framebuffer.Upload();
 
