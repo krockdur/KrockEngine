@@ -9,9 +9,9 @@ namespace MyMGPixelEngine;
 
 public class Game1 : Game
 {
-    const int WINDOW_WIDTH = 128;
-    const int WINDOW_HEIGHT = 128;
-    const int scale = 5;
+    const int WINDOW_WIDTH = 300;
+    const int WINDOW_HEIGHT = 100;
+    const int scale = 3;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -94,7 +94,13 @@ public class Game1 : Game
             framebuffer.SetPixel(mouseState.Position.X / scale, mouseState.Position.Y / scale, activeColor);
         }
 
-        framebuffer.AddText("HELLO TOUT LE MONDE", 10, 10, ColorList.Blue);
+        //framebuffer.AddText("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10, 10, ColorList.Blue, ColorList.White);
+        //framebuffer.AddText("0123456789", 10, 20, ColorList.Red, ColorList.Yellow);
+        //framebuffer.AddText(" -:", 10, 30, ColorList.White, ColorList.Black);
+
+        //framebuffer.AddCar('B', 0,0, ColorList.Black);
+
+        framebuffer.addButton("BONJOUR", 10, 40, 120, 50, 1, 3);
 
         framebuffer.Upload();
 

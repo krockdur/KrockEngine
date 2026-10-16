@@ -17,7 +17,6 @@ internal class PixelMap
         Width = width;
         Height = height;
 
-        picture = new int[width, height];
         this.picture = picture;
     }
 

@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "f:\\Dev\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {}
+    "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {}
   },
   "projects": {
-    "f:\\Dev\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {
+    "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "f:\\Dev\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
+        "projectUniqueName": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
         "projectName": "MG_PictureEditor",
-        "projectPath": "f:\\Dev\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
-        "packagesPath": "C:\\Users\\krock\\.nuget\\packages\\",
-        "outputPath": "f:\\Dev\\KrockEngine\\MyMGPixelEngine_picture_editor\\obj\\",
+        "projectPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
+        "packagesPath": "C:\\Users\\JF\\.nuget\\packages\\",
+        "outputPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\krock\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\JF\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "11.0.100"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net9.0": {
@@ -69,30 +72,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.20, 9.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[9.0.20, 9.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[9.0.20, 9.0.20]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[9.0.20, 9.0.20]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\11.0.100-rc.1.26425.128/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

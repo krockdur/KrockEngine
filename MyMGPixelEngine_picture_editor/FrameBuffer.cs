@@ -65,9 +65,9 @@ namespace MyMGPixelEngine
             }
         }
 
-        public void AddCar(char c, int positionX, int positionY, int color)
+        public void AddCar(char c, int positionX, int positionY, int frontColor, int backColor)
         {
-            if (!Font.Font5x7.TryGetValue(c, out var glyph))
+            if (!Font.Font8x7.TryGetValue(c, out var glyph))
                 return;
 
             for (int y = 0; y < 7; y++)
@@ -76,35 +76,41 @@ namespace MyMGPixelEngine
 
                 for (int i = 0; i < 8; i++)
                 {
-                    bits[i] = (glyph[y] & (1 << i)) != 0;
+                    bits[i] = (glyph[y] & (1 << (7 - i))) != 0;
                 }
 
-                for (int x = 0; x < 5; x++)
+                for (int x = 0; x < 8; x++)
                 {
                     int destX = x + positionX;
                     int destY = y + positionY;
 
                     if (destX >= 0 && destX < Width && destY >= 0 && destY < Height)
                     {
-                        int tmpPix = 0;
-                        if (bits[x] == true) tmpPix = 1;
+                        int tmpPix = backColor;
+                        if (bits[x] == true) tmpPix = frontColor;
                         pixelsCopy[destY * Width + destX] = tmpPix;
                     }
                 }
             }
         }
 
-        public void AddText(string text, int positionX, int positionY, int color)
+        public void AddText(string text, int positionX, int positionY, int frontColor, int backColor)
         {
             for (int i = 0; i < text.Length; i++)
             {
-                AddCar(text[i], positionX + i * 6, positionY, ColorList.Blue);
+                AddCar(text[i], positionX + i * 7, positionY, frontColor, backColor);
             }
+        }
+
+        public void addButton(string text, int positionX, int positionY, int width, int height, int frontColor, int backColor)
+        {
+            Button tmpButton = new Button(width, height, text);
+            PixelMap tmpPm = new PixelMap(width, height, tmpButton.pixelsButton);
+            this.addPicture(positionX, positionY, tmpPm );
         }
 
         public void Upload()
         {
-
             texture.SetData(BufferToPixels(pixelsCopy));
         }
 
