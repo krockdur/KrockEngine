@@ -9,9 +9,6 @@ namespace MyMGPixelEngine;
 
 public class Game1 : Game
 {
-    const int WINDOW_WIDTH = 300;
-    const int WINDOW_HEIGHT = 100;
-    const int scale = 3;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -20,14 +17,17 @@ public class Game1 : Game
 
 
     PixelMap myPicture;
-    
+
+
+    Button[] buttons;
+
 
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = WINDOW_WIDTH * scale;
-        _graphics.PreferredBackBufferHeight = WINDOW_HEIGHT * scale;
+        _graphics.PreferredBackBufferWidth = Config.WINDOW_WIDTH * Config.SCALE;
+        _graphics.PreferredBackBufferHeight = Config.WINDOW_HEIGHT * Config.SCALE;
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -36,6 +36,14 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
 
+        framebuffer = new FrameBuffer(GraphicsDevice, Config.WINDOW_WIDTH, Config.WINDOW_WIDTH);
+        framebuffer.Clear();
+
+        buttons = new Button[]
+        {
+            new Button(10, 10, 100, 50, "CLICK ME"),
+            new Button(10, 70, 100, 50, "CLIQUE MOI")
+        };
 
         base.Initialize();
     }
@@ -45,14 +53,18 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        framebuffer = new FrameBuffer(GraphicsDevice, WINDOW_WIDTH, WINDOW_HEIGHT);
-        framebuffer.Clear();
-    }
 
+        foreach (var button in buttons)
+        {
+            framebuffer.addButton(button);
+        }
+
+
+    }
     int pos_pixel_x, pos_pixel_y = 0;
     double time_elapsed = 0;
     int activeColor = ColorList.White;
-
+    private MouseState _previousMouseState;
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -88,10 +100,22 @@ public class Game1 : Game
 
         MouseState mouseState = Mouse.GetState();
 
-
-        if (mouseState.LeftButton == ButtonState.Pressed)
+        foreach (var button in buttons)
         {
-            framebuffer.SetPixel(mouseState.Position.X / scale, mouseState.Position.Y / scale, activeColor);
+            button.Update(mouseState, _previousMouseState);
+        }
+
+        /*         if (mouseState.LeftButton == ButtonState.Pressed)
+        {
+            framebuffer.SetPixel(mouseState.Position.X / Config.SCALE, mouseState.Position.Y / Config.SCALE, activeColor);
+        } */
+
+        foreach (var button in buttons)
+        {
+            if (button.IsPressed)
+            {
+                Debug.WriteLine($"boutton appuyé : '{button.Text}'");
+            }
         }
 
         //framebuffer.AddText("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10, 10, ColorList.Blue, ColorList.White);
@@ -100,9 +124,11 @@ public class Game1 : Game
 
         //framebuffer.AddCar('B', 0,0, ColorList.Black);
 
-        framebuffer.addButton("BONJOUR", 10, 40, 120, 50, 1, 3);
+
 
         framebuffer.Upload();
+        // OBLIGATOIRE : Sauvegarder l'état pour la frame suivante
+        _previousMouseState = mouseState;
 
         base.Update(gameTime);
     }

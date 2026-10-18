@@ -1,31 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {}
+    "/Users/krock/Dev/KrockEngine/MyMGPixelEngine_picture_editor/MG_PictureEditor.csproj": {}
   },
   "projects": {
-    "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {
+    "/Users/krock/Dev/KrockEngine/MyMGPixelEngine_picture_editor/MG_PictureEditor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
+        "projectUniqueName": "/Users/krock/Dev/KrockEngine/MyMGPixelEngine_picture_editor/MG_PictureEditor.csproj",
         "projectName": "MG_PictureEditor",
-        "projectPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
-        "packagesPath": "C:\\Users\\JF\\.nuget\\packages\\",
-        "outputPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\obj\\",
+        "projectPath": "/Users/krock/Dev/KrockEngine/MyMGPixelEngine_picture_editor/MG_PictureEditor.csproj",
+        "packagesPath": "/Users/krock/.nuget/packages/",
+        "outputPath": "/Users/krock/Dev/KrockEngine/MyMGPixelEngine_picture_editor/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\JF\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/krock/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,12 +67,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.20, 9.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[9.0.20, 9.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.20, 9.0.20]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

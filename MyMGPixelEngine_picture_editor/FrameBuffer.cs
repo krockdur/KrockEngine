@@ -102,11 +102,17 @@ namespace MyMGPixelEngine
             }
         }
 
-        public void addButton(string text, int positionX, int positionY, int width, int height, int frontColor, int backColor)
+/*         public void addButton(string text, int positionX, int positionY, int width, int height, int frontColor, int backColor)
         {
             Button tmpButton = new Button(width, height, text);
             PixelMap tmpPm = new PixelMap(width, height, tmpButton.pixelsButton);
             this.addPicture(positionX, positionY, tmpPm );
+        } */
+
+        public void addButton(Button button)
+        {
+            PixelMap tmpPm = new PixelMap(button.Width, button.Height, button.pixelsButton);
+            this.addPicture(button.PositonX, button.PositonY, tmpPm);
         }
 
         public void Upload()

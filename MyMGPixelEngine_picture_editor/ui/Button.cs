@@ -1,4 +1,5 @@
 
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,14 +9,33 @@ using MyMGPixelEngine;
 internal class Button
 {
     public int[,] pixelsButton { get; }
-    private int Width;
-    private int Height;
-    public Button(int width, int height, string text)
+
+    private int _position_x;
+    public int PositonX => _position_x;
+
+    private int _position_y;
+    public int PositonY => _position_y;
+
+    private int _width;
+    public int Width => _width;
+
+    private int _height;
+    public int Height => _height;
+
+
+    public bool IsPressed { get; set; }
+    public string Text { get; set; }
+
+
+    public Button(int positionX, int positionY, int width, int height, string text)
     {
         pixelsButton = new int[height, width];
 
-        Width = width;
-        Height = height;
+        _position_x = positionX;
+        _position_y = positionY;
+        _width = width;
+        _height = height;
+        Text = text;
 
         // Cadre et fond
         for (int j = 0; j < height; j++)
@@ -32,8 +52,10 @@ internal class Button
         // le texte ne peut pas sortir du bouton
         if (textPixelsLength <= width)
         {
-            addText(text, width/2 - textPixelsLength/2, height/2-3, ColorList.Red, ColorList.White);            
+            addText(text, width / 2 - textPixelsLength / 2, height / 2 - 3, ColorList.Red, ColorList.White);
         }
+
+        IsPressed = false;
 
     }
 
@@ -59,7 +81,7 @@ internal class Button
                 int tmpPix = backColor;
                 if (bits[x] == true) tmpPix = frontColor;
                 pixelsButton[destY, destX] = tmpPix;
-                
+
             }
         }
     }
@@ -72,4 +94,24 @@ internal class Button
         }
     }
 
+
+    private bool _wasPressed = false;
+public void Update(MouseState currentMouseState, MouseState previousMouseState)
+{
+    IsPressed = false;
+
+    int mouseX = currentMouseState.Position.X / Config.SCALE;
+    int mouseY = currentMouseState.Position.Y / Config.SCALE;
+
+    bool isHovered = mouseX >= _position_x && mouseX < _position_x + _width &&
+                     mouseY >= _position_y && mouseY < _position_y + _height;
+
+    // Déclenché à l'instant exact où le bouton est appuyé
+    if (isHovered && 
+        currentMouseState.LeftButton == ButtonState.Pressed && 
+        previousMouseState.LeftButton == ButtonState.Released)
+    {
+        IsPressed = true;
+    }
+}
 }
