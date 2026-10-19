@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,10 @@ namespace MyMGPixelEngine
                     if (destX >= 0 && destX < Width && destY >= 0 && destY < Height)
                     {
                         pixelsCopy[destY * Width + destX] = picture.getPicture()[y, x];
+                    }
+                    else
+                    {
+                        Debug.WriteLine("dring");
                     }
                 }
             }

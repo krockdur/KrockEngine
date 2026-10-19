@@ -7,6 +7,6 @@ namespace MyMGPixelEngine
     {
         public static int WINDOW_WIDTH = 300;
         public static int WINDOW_HEIGHT = 200;
-        public static int SCALE = 3;
+        public static int SCALE = 1;
     }
 }

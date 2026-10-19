@@ -41,8 +41,9 @@ public class Game1 : Game
 
         buttons = new Button[]
         {
-            new Button(10, 10, 100, 50, "CLICK ME"),
-            new Button(10, 70, 100, 50, "CLIQUE MOI")
+            new Button(0, 0, 50, 10, "CLICK ME"),
+            //new Button(10, 80, 100, 50, "CLIQUE MOI"),
+            //new Button(10, 120, 100, 50, "ET MOI")
         };
 
         base.Initialize();

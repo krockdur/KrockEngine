@@ -95,23 +95,24 @@ internal class Button
     }
 
 
-    private bool _wasPressed = false;
-public void Update(MouseState currentMouseState, MouseState previousMouseState)
-{
-    IsPressed = false;
-
-    int mouseX = currentMouseState.Position.X / Config.SCALE;
-    int mouseY = currentMouseState.Position.Y / Config.SCALE;
-
-    bool isHovered = mouseX >= _position_x && mouseX < _position_x + _width &&
-                     mouseY >= _position_y && mouseY < _position_y + _height;
-
-    // Déclenché à l'instant exact où le bouton est appuyé
-    if (isHovered && 
-        currentMouseState.LeftButton == ButtonState.Pressed && 
-        previousMouseState.LeftButton == ButtonState.Released)
+    public void Update(MouseState currentMouseState, MouseState previousMouseState)
     {
-        IsPressed = true;
+        IsPressed = false;
+
+        int mouseX = currentMouseState.Position.X / Config.SCALE;
+        int mouseY = currentMouseState.Position.Y / Config.SCALE;
+
+        Debug.WriteLine($"{mouseX}       {mouseY}");
+
+        bool isHovered = mouseX >= _position_x && mouseX < _position_x + _width &&
+                         mouseY >= _position_y && mouseY < _position_y + _height;
+
+        // Déclenché à l'instant exact où le bouton est appuyé
+        if (isHovered &&
+            currentMouseState.LeftButton == ButtonState.Pressed &&
+            previousMouseState.LeftButton == ButtonState.Released)
+        {
+            IsPressed = true;
+        }
     }
-}
 }
