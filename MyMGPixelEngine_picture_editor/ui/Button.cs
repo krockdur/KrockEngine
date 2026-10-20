@@ -8,7 +8,7 @@ using MyMGPixelEngine;
 
 internal class Button
 {
-    public int[,] pixelsButton { get; }
+    private int[,] _pixelsButton;
 
     private int _position_x;
     public int PositonX => _position_x;
@@ -23,8 +23,16 @@ internal class Button
     public int Height => _height;
 
 
+    private bool _isHover;
     public bool IsPressed { get; set; }
     public string Text { get; set; }
+
+    private int _borderColor;
+    private int _backgroundColor;
+    private int _textColor;
+    private int _pressBorderColor;
+    private int _pressBackgroundColor;
+    private int _pressTextColor;
 
 
     public Button(
@@ -35,36 +43,55 @@ internal class Button
         string text,
         int borderColor,
         int backgroundColor,
-        int textColor)
+        int textColor,
+        int pressBorderColor,
+        int pressBackgroundColor,
+        int pressTextColor)
     {
-        pixelsButton = new int[height, width];
+        _pixelsButton = new int[height, width];
 
         _position_x = positionX;
         _position_y = positionY;
         _width = width;
         _height = height;
         Text = text;
-
-        // Cadre et fond
-        for (int j = 0; j < height; j++)
-        {
-            for (int i = 0; i < width; i++)
-            {
-                pixelsButton[j, i] = backgroundColor;
-                if (i == 0 || j == 0 || i == width - 1 || j == height - 1) pixelsButton[j, i] = borderColor;
-            }
-        }
-
-        int textPixelsLength = text.Length * 7; // longueur en pixel du text
-
-        // le texte ne peut pas sortir du bouton
-        if (textPixelsLength <= width)
-        {
-            addText(text, width / 2 - textPixelsLength / 2, height / 2 - 3, textColor, backgroundColor);
-        }
+        _backgroundColor = backgroundColor;
+        _borderColor = borderColor;
+        _textColor = textColor;
+        _pressBackgroundColor = pressBackgroundColor;
+        _pressBorderColor = pressBorderColor;
+        _pressTextColor = pressTextColor;
 
         IsPressed = false;
 
+        make();
+
+    }
+
+    private void make()
+    {
+        // Cadre et fond
+        for (int j = 0; j < _height; j++)
+        {
+            for (int i = 0; i < _width; i++)
+            {
+                _pixelsButton[j, i] = (_isHover) ? _pressBackgroundColor : _backgroundColor;
+
+                if (i == 0 || j == 0 || i == _width - 1 || j == _height - 1)
+                {
+                    _pixelsButton[j, i] = (_isHover) ? _pressBorderColor : _borderColor;
+                }
+                    
+            }
+        }
+
+        int textPixelsLength = Text.Length * 7; // longueur en pixel du text
+
+        // le texte ne peut pas sortir du bouton
+        if (textPixelsLength <= _width)
+        {
+            addText(Text, _width / 2 - textPixelsLength / 2, _height / 2 - 3, _textColor, _backgroundColor);
+        }
     }
 
     private void addCar(char c, int positionX, int positionY, int frontColor, int backColor)
@@ -88,7 +115,7 @@ internal class Button
 
                 int tmpPix = backColor;
                 if (bits[x] == true) tmpPix = frontColor;
-                pixelsButton[destY, destX] = tmpPix;
+                _pixelsButton[destY, destX] = tmpPix;
 
             }
         }
@@ -102,7 +129,7 @@ internal class Button
         }
     }
 
-
+    bool _wasIsHover = false;
     public void Update(MouseState currentMouseState, MouseState previousMouseState)
     {
         IsPressed = false;
@@ -110,16 +137,33 @@ internal class Button
         int mouseX = currentMouseState.Position.X / Config.SCALE;
         int mouseY = currentMouseState.Position.Y / Config.SCALE;
 
+        
         // 
-        bool isHovered = mouseX >= _position_x && mouseX < _position_x + _width &&
+        _isHover = mouseX >= _position_x && mouseX < _position_x + _width &&
                          mouseY >= _position_y && mouseY < _position_y + _height;
+        if (_isHover)
+        {
+            make();
+            _wasIsHover = true;        
+        }
+        if (!_isHover && _wasIsHover)
+        {
+            make();
+            _wasIsHover = false;
+        }
 
         // Déclenché à l'instant exact où le bouton est appuyé
-        if (isHovered &&
+        if (_isHover &&
             currentMouseState.LeftButton == ButtonState.Pressed &&
             previousMouseState.LeftButton == ButtonState.Released)
         {
             IsPressed = true;
         }
+    }
+
+    public void AddToFramebuffer(ref FrameBuffer frameBuffer)
+    {
+        PixelMap tmpPm = new PixelMap(_width, _height, _pixelsButton);
+        frameBuffer.addPicture(_position_x, _position_y, tmpPm);
     }
 }

@@ -14,8 +14,7 @@ namespace MyMGPixelEngine
         public readonly int Width;
         public readonly int Height;
 
-        private readonly Color[] pixels;    // Tableau de pixels à rendre
-        private readonly int[] pixelsCopy;  // Copie du tableau de pixels à rendre
+        private readonly int[] _framebuffer; 
         private readonly Texture2D texture;
 
         public Texture2D Texture => texture;
@@ -25,15 +24,14 @@ namespace MyMGPixelEngine
             Width = width;
             Height = height;
 
-            pixels = new Color[width * height];
-            pixelsCopy = new int[width * height];
+            _framebuffer = new int[width * height];
 
             texture = new Texture2D(graphicsDevice, width, height);
         }
 
         public void Clear()
         {
-            Array.Fill(pixelsCopy, ColorList.Black);  // Remplir le tableau de pixels avec le pixel de fond
+            Array.Fill(_framebuffer, ColorList.Black);  // Remplir le tableau de pixels avec le pixel de fond
         }
 
         public void SetPixel(int x, int y, int color)
@@ -41,12 +39,12 @@ namespace MyMGPixelEngine
             if (x < 0 || y < 0 || x >= Width || y >= Height)
                 return;
 
-            pixelsCopy[y * Width + x] = color;
+            _framebuffer[y * Width + x] = color;
         }
 
         public int GetPixel(int x, int y)
         {
-            return pixelsCopy[y * Width + x];
+            return _framebuffer[y * Width + x];
         }
 
         public void addPicture(int positionX, int positionY, PixelMap picture)
@@ -60,7 +58,7 @@ namespace MyMGPixelEngine
 
                     if (destX >= 0 && destX < Width && destY >= 0 && destY < Height)
                     {
-                        pixelsCopy[destY * Width + destX] = picture.getPicture()[y, x];
+                        _framebuffer[destY * Width + destX] = picture.getPicture()[y, x];
                     }
                     else
                     {
@@ -93,7 +91,7 @@ namespace MyMGPixelEngine
                     {
                         int tmpPix = backColor;
                         if (bits[x] == true) tmpPix = frontColor;
-                        pixelsCopy[destY * Width + destX] = tmpPix;
+                        _framebuffer[destY * Width + destX] = tmpPix;
                     }
                 }
             }
@@ -106,30 +104,6 @@ namespace MyMGPixelEngine
                 AddCar(text[i], positionX + i * 7, positionY, frontColor, backColor);
             }
         }
-
-/*         public void addButton(string text, int positionX, int positionY, int width, int height, int frontColor, int backColor)
-        {
-            Button tmpButton = new Button(width, height, text);
-            PixelMap tmpPm = new PixelMap(width, height, tmpButton.pixelsButton);
-            this.addPicture(positionX, positionY, tmpPm );
-        } */
-
-        public void addButton(Button button)
-        {
-            PixelMap tmpPm = new PixelMap(button.Width, button.Height, button.pixelsButton);
-            this.addPicture(button.PositonX, button.PositonY, tmpPm);
-        }
-
-        public void Upload()
-        {
-            texture.SetData(BufferToPixels(pixelsCopy));
-        }
-
-        /// <summary>
-        /// Déplace vers le bas (1 pixel par frame) tous les pixels égaux à fallingColor
-        /// en les faisant tomber dans des pixels égaux à emptyColor. Balayage de bas en haut
-        /// pour éviter double-déplacement.
-        /// </summary>
 
         public void UpdateSandGravity(int fallingColor, int emptyColor)
         {
@@ -147,16 +121,16 @@ namespace MyMGPixelEngine
                 {
                     int idx = rowOffset + x;
 
-                    if (pixelsCopy[idx] != fallingColor)
+                    if (_framebuffer[idx] != fallingColor)
                         continue;
 
                     int downIdx = belowOffset + x;
 
                     // Chute verticale
-                    if (pixelsCopy[downIdx] == emptyColor)
+                    if (_framebuffer[downIdx] == emptyColor)
                     {
-                        pixelsCopy[downIdx] = fallingColor;
-                        pixelsCopy[idx] = emptyColor;
+                        _framebuffer[downIdx] = fallingColor;
+                        _framebuffer[idx] = emptyColor;
                         continue;
                     }
 
@@ -169,10 +143,10 @@ namespace MyMGPixelEngine
                         if (x > 0)
                         {
                             int downLeft = belowOffset + x - 1;
-                            if (pixelsCopy[downLeft] == emptyColor)
+                            if (_framebuffer[downLeft] == emptyColor)
                             {
-                                pixelsCopy[downLeft] = fallingColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downLeft] = fallingColor;
+                                _framebuffer[idx] = emptyColor;
                                 continue;
                             }
                         }
@@ -181,10 +155,10 @@ namespace MyMGPixelEngine
                         if (x < Width - 1)
                         {
                             int downRight = belowOffset + x + 1;
-                            if (pixelsCopy[downRight] == emptyColor)
+                            if (_framebuffer[downRight] == emptyColor)
                             {
-                                pixelsCopy[downRight] = fallingColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downRight] = fallingColor;
+                                _framebuffer[idx] = emptyColor;
                             }
                         }
                     }
@@ -194,10 +168,10 @@ namespace MyMGPixelEngine
                         if (x < Width - 1)
                         {
                             int downRight = belowOffset + x + 1;
-                            if (pixelsCopy[downRight] == emptyColor)
+                            if (_framebuffer[downRight] == emptyColor)
                             {
-                                pixelsCopy[downRight] = fallingColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downRight] = fallingColor;
+                                _framebuffer[idx] = emptyColor;
                                 continue;
                             }
                         }
@@ -206,10 +180,10 @@ namespace MyMGPixelEngine
                         if (x > 0)
                         {
                             int downLeft = belowOffset + x - 1;
-                            if (pixelsCopy[downLeft] == emptyColor)
+                            if (_framebuffer[downLeft] == emptyColor)
                             {
-                                pixelsCopy[downLeft] = fallingColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downLeft] = fallingColor;
+                                _framebuffer[idx] = emptyColor;
                             }
                         }
                     }
@@ -233,16 +207,16 @@ namespace MyMGPixelEngine
                 {
                     int idx = rowOffset + x;
 
-                    if (pixelsCopy[idx] != waterColor)
+                    if (_framebuffer[idx] != waterColor)
                         continue;
 
                     // 1. Chute verticale
                     int down = belowOffset + x;
 
-                    if (pixelsCopy[down] == emptyColor)
+                    if (_framebuffer[down] == emptyColor)
                     {
-                        pixelsCopy[down] = waterColor;
-                        pixelsCopy[idx] = emptyColor;
+                        _framebuffer[down] = waterColor;
+                        _framebuffer[idx] = emptyColor;
                         continue;
                     }
 
@@ -254,10 +228,10 @@ namespace MyMGPixelEngine
                         if (x > 0)
                         {
                             int downLeft = belowOffset + x - 1;
-                            if (pixelsCopy[downLeft] == emptyColor)
+                            if (_framebuffer[downLeft] == emptyColor)
                             {
-                                pixelsCopy[downLeft] = waterColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downLeft] = waterColor;
+                                _framebuffer[idx] = emptyColor;
                                 continue;
                             }
                         }
@@ -265,10 +239,10 @@ namespace MyMGPixelEngine
                         if (x < Width - 1)
                         {
                             int downRight = belowOffset + x + 1;
-                            if (pixelsCopy[downRight] == emptyColor)
+                            if (_framebuffer[downRight] == emptyColor)
                             {
-                                pixelsCopy[downRight] = waterColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downRight] = waterColor;
+                                _framebuffer[idx] = emptyColor;
                                 continue;
                             }
                         }
@@ -278,10 +252,10 @@ namespace MyMGPixelEngine
                         if (x < Width - 1)
                         {
                             int downRight = belowOffset + x + 1;
-                            if (pixelsCopy[downRight] == emptyColor)
+                            if (_framebuffer[downRight] == emptyColor)
                             {
-                                pixelsCopy[downRight] = waterColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downRight] = waterColor;
+                                _framebuffer[idx] = emptyColor;
                                 continue;
                             }
                         }
@@ -289,10 +263,10 @@ namespace MyMGPixelEngine
                         if (x > 0)
                         {
                             int downLeft = belowOffset + x - 1;
-                            if (pixelsCopy[downLeft] == emptyColor)
+                            if (_framebuffer[downLeft] == emptyColor)
                             {
-                                pixelsCopy[downLeft] = waterColor;
-                                pixelsCopy[idx] = emptyColor;
+                                _framebuffer[downLeft] = waterColor;
+                                _framebuffer[idx] = emptyColor;
                                 continue;
                             }
                         }
@@ -301,41 +275,38 @@ namespace MyMGPixelEngine
                     // 3. Écoulement horizontal
                     if (leftFirst)
                     {
-                        if (x > 0 && pixelsCopy[idx - 1] == emptyColor)
+                        if (x > 0 && _framebuffer[idx - 1] == emptyColor)
                         {
-                            pixelsCopy[idx - 1] = waterColor;
-                            pixelsCopy[idx] = emptyColor;
+                            _framebuffer[idx - 1] = waterColor;
+                            _framebuffer[idx] = emptyColor;
                             continue;
                         }
 
-                        if (x < Width - 1 && pixelsCopy[idx + 1] == emptyColor)
+                        if (x < Width - 1 && _framebuffer[idx + 1] == emptyColor)
                         {
-                            pixelsCopy[idx + 1] = waterColor;
-                            pixelsCopy[idx] = emptyColor;
+                            _framebuffer[idx + 1] = waterColor;
+                            _framebuffer[idx] = emptyColor;
                         }
                     }
                     else
                     {
-                        if (x < Width - 1 && pixelsCopy[idx + 1] == emptyColor)
+                        if (x < Width - 1 && _framebuffer[idx + 1] == emptyColor)
                         {
-                            pixelsCopy[idx + 1] = waterColor;
-                            pixelsCopy[idx] = emptyColor;
+                            _framebuffer[idx + 1] = waterColor;
+                            _framebuffer[idx] = emptyColor;
                             continue;
                         }
 
-                        if (x > 0 && pixelsCopy[idx - 1] == emptyColor)
+                        if (x > 0 && _framebuffer[idx - 1] == emptyColor)
                         {
-                            pixelsCopy[idx - 1] = waterColor;
-                            pixelsCopy[idx] = emptyColor;
+                            _framebuffer[idx - 1] = waterColor;
+                            _framebuffer[idx] = emptyColor;
                         }
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// Par défaut : jaune tombe et l'espace vide est Color.Transparent.
-        /// </summary>
         public void UpdateGravity()
         {
             UpdateSandGravity(ColorList.Yellow, ColorList.Black);
@@ -343,6 +314,10 @@ namespace MyMGPixelEngine
 
         }
 
+        public void Upload()
+        {
+            texture.SetData(BufferToPixels(_framebuffer));
+        }
         public Color[] BufferToPixels(int[] mapbuffer)
         {
             Color[] pixels = new Color[mapbuffer.Length];
@@ -369,6 +344,7 @@ namespace MyMGPixelEngine
             }
             return pixels;
         }
+    
     }
 }
 

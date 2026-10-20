@@ -41,12 +41,12 @@ public class Game1 : Game
 
         buttons = new Button[]
         {
-            new Button(0,   0,      50, 15, "UN", ColorList.White, ColorList.Yellow, ColorList.Blue),
-            new Button(0,   50,     50, 15, "DEUX", ColorList.White, ColorList.Yellow, ColorList.Blue),
-            new Button(0,  100,    50, 15, "TROIS", ColorList.White, ColorList.Yellow, ColorList.Blue),
-            new Button(100,   0,      50, 15, "QUATRE", ColorList.White, ColorList.Yellow, ColorList.Blue),
-            new Button(100,  50,     50, 15, "CINQ", ColorList.White, ColorList.Yellow, ColorList.Blue),
-            new Button(100,  100,    50, 15, "SIX", ColorList.White, ColorList.Yellow, ColorList.Blue),
+            new Button(0,   0,      50, 15, "UN", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(0,   50,     50, 15, "DEUX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(0,  100,    50, 15, "TROIS", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(100,   0,      50, 15, "QUATRE", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(100,  50,     50, 15, "CINQ", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(100,  100,    50, 15, "SIX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
 
         };
 
@@ -58,14 +58,10 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-
-        foreach (var button in buttons)
-        {
-            framebuffer.addButton(button);
-        }
-
-
     }
+
+
+    
     int pos_pixel_x, pos_pixel_y = 0;
     double time_elapsed = 0;
     int activeColor = ColorList.White;
@@ -130,7 +126,7 @@ public class Game1 : Game
         //framebuffer.AddCar('B', 0,0, ColorList.Black);
 
 
-
+        refreshFramebufferUI();
         framebuffer.Upload();
         // OBLIGATOIRE : Sauvegarder l'état pour la frame suivante
         _previousMouseState = mouseState;
@@ -159,5 +155,14 @@ public class Game1 : Game
 
 
         base.Draw(gameTime);
+    }
+
+    private void refreshFramebufferUI()
+    {
+        foreach (var button in buttons)
+        {
+            //framebuffer.addButton(button);
+            button.AddToFramebuffer(ref framebuffer);
+        }
     }
 }
