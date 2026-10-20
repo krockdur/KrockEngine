@@ -5,8 +5,8 @@ namespace MyMGPixelEngine
     /// </summary>
     public static class Config
     {
-        public static int WINDOW_WIDTH = 300;
-        public static int WINDOW_HEIGHT = 200;
-        public static int SCALE = 1;
+        public static int WINDOW_WIDTH = 200;
+        public static int WINDOW_HEIGHT = 150;
+        public static int SCALE = 5;
     }
 }

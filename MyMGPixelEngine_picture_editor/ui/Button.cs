@@ -27,7 +27,15 @@ internal class Button
     public string Text { get; set; }
 
 
-    public Button(int positionX, int positionY, int width, int height, string text)
+    public Button(
+        int positionX,
+        int positionY,
+        int width,
+        int height,
+        string text,
+        int borderColor,
+        int backgroundColor,
+        int textColor)
     {
         pixelsButton = new int[height, width];
 
@@ -42,8 +50,8 @@ internal class Button
         {
             for (int i = 0; i < width; i++)
             {
-                pixelsButton[j, i] = ColorList.White;
-                if (i == 0 || j == 0 || i == width - 1 || j == height - 1) pixelsButton[j, i] = ColorList.Red;
+                pixelsButton[j, i] = backgroundColor;
+                if (i == 0 || j == 0 || i == width - 1 || j == height - 1) pixelsButton[j, i] = borderColor;
             }
         }
 
@@ -52,7 +60,7 @@ internal class Button
         // le texte ne peut pas sortir du bouton
         if (textPixelsLength <= width)
         {
-            addText(text, width / 2 - textPixelsLength / 2, height / 2 - 3, ColorList.Red, ColorList.White);
+            addText(text, width / 2 - textPixelsLength / 2, height / 2 - 3, textColor, backgroundColor);
         }
 
         IsPressed = false;
@@ -102,8 +110,7 @@ internal class Button
         int mouseX = currentMouseState.Position.X / Config.SCALE;
         int mouseY = currentMouseState.Position.Y / Config.SCALE;
 
-        Debug.WriteLine($"{mouseX}       {mouseY}");
-
+        // 
         bool isHovered = mouseX >= _position_x && mouseX < _position_x + _width &&
                          mouseY >= _position_y && mouseY < _position_y + _height;
 

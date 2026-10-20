@@ -36,14 +36,18 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
 
-        framebuffer = new FrameBuffer(GraphicsDevice, Config.WINDOW_WIDTH, Config.WINDOW_WIDTH);
+        framebuffer = new FrameBuffer(GraphicsDevice, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         framebuffer.Clear();
 
         buttons = new Button[]
         {
-            new Button(0, 0, 50, 10, "CLICK ME"),
-            //new Button(10, 80, 100, 50, "CLIQUE MOI"),
-            //new Button(10, 120, 100, 50, "ET MOI")
+            new Button(0,   0,      50, 15, "UN", ColorList.White, ColorList.Yellow, ColorList.Blue),
+            new Button(0,   50,     50, 15, "DEUX", ColorList.White, ColorList.Yellow, ColorList.Blue),
+            new Button(0,  100,    50, 15, "TROIS", ColorList.White, ColorList.Yellow, ColorList.Blue),
+            new Button(100,   0,      50, 15, "QUATRE", ColorList.White, ColorList.Yellow, ColorList.Blue),
+            new Button(100,  50,     50, 15, "CINQ", ColorList.White, ColorList.Yellow, ColorList.Blue),
+            new Button(100,  100,    50, 15, "SIX", ColorList.White, ColorList.Yellow, ColorList.Blue),
+
         };
 
         base.Initialize();
