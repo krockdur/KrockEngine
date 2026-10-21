@@ -20,7 +20,7 @@ public class Game1 : Game
 
 
     Button[] buttons;
-
+    Text textHour1;
 
 
     public Game1()
@@ -39,16 +39,7 @@ public class Game1 : Game
         framebuffer = new FrameBuffer(GraphicsDevice, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         framebuffer.Clear();
 
-        buttons = new Button[]
-        {
-            new Button(0,   0,      50, 15, "UN", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(0,   50,     50, 15, "DEUX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(0,  100,    50, 15, "TROIS", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(100,   0,      50, 15, "QUATRE", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(100,  50,     50, 15, "CINQ", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(100,  100,    50, 15, "SIX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-
-        };
+        initializeUI();
 
         base.Initialize();
     }
@@ -61,7 +52,7 @@ public class Game1 : Game
     }
 
 
-    
+
     int pos_pixel_x, pos_pixel_y = 0;
     double time_elapsed = 0;
     int activeColor = ColorList.White;
@@ -119,14 +110,10 @@ public class Game1 : Game
             }
         }
 
-        //framebuffer.AddText("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10, 10, ColorList.Blue, ColorList.White);
-        //framebuffer.AddText("0123456789", 10, 20, ColorList.Red, ColorList.Yellow);
-        //framebuffer.AddText(" -:", 10, 30, ColorList.White, ColorList.Black);
-
-        //framebuffer.AddCar('B', 0,0, ColorList.Black);
-
-
+        // UI
         refreshFramebufferUI();
+
+        // Chargement du framebuffer dans la texture à déssiner
         framebuffer.Upload();
         // OBLIGATOIRE : Sauvegarder l'état pour la frame suivante
         _previousMouseState = mouseState;
@@ -157,12 +144,36 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 
+    private void initializeUI()
+    {
+        buttons = new Button[]
+        {
+            new Button(0,   0,      50, 15, "UN", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(0,   50,     50, 15, "DEUX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(0,  100,    50, 15, "TROIS", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(100,   0,      50, 15, "QUATRE", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(100,  50,     50, 15, "CINQ", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+            new Button(100,  100,    50, 15, "SIX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
+
+        };
+
+        textHour1 = new Text("", 100, 75, 1, ColorList.White, ColorList.Black);
+    }
     private void refreshFramebufferUI()
     {
         foreach (var button in buttons)
         {
             //framebuffer.addButton(button);
             button.AddToFramebuffer(ref framebuffer);
+
+            string tmp = DateTime.Now.Hour.ToString().ToUpper()
+            + " : " + DateTime.Now.Minute.ToString().ToUpper()
+            + " : " + DateTime.Now.Second.ToString().ToUpper();
+
+            textHour1.SetText(tmp);
+
+            textHour1.SetBackColor(ColorList.Blue);
+            textHour1.AddToFramebuffer(ref framebuffer);
         }
     }
 }

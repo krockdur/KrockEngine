@@ -11,7 +11,12 @@ internal class PixelMap
     public int Height { get; set; }
 
 
-    // constructeur à partir d'un tableaus
+    public PixelMap()
+    {
+
+    }
+
+    // constructeur à partir d'un tableau
     public PixelMap(int width, int height, int[,] picture)
     {
         Width = width;
@@ -22,6 +27,11 @@ internal class PixelMap
 
     // Constructeur à partir d'un fichier
     public PixelMap(string path)
+    {
+        SetPictureFromFile(path);
+    }
+
+    public void SetPictureFromFile(string path)
     {
         using (StreamReader reader = new StreamReader(path))
         {

@@ -6,15 +6,32 @@ internal class Text
     private int _positionY;
     private string _text;
     private int _scale;
+    private int _frontColor;
+    private int _backColor;
 
-    public Text(string text, int positionX, int positionY, int scale)
+    public Text(string text, int positionX, int positionY, int scale, int frontColor, int backColor)
     {
         _positionX = positionX;
         _positionY = positionY;
         _text = text;
         _scale = scale;
+        _frontColor = frontColor;
+        _backColor = backColor;
     }
 
+    public void SetText(string text)
+    {
+        _text = text;
+    }
+
+    public void SetFrontColor(int color)
+    {
+        _frontColor = color;
+    }
+    public void SetBackColor(int color)
+    {
+        _backColor = color;
+    }
     public void Update()
     {
         // Squelette
@@ -23,17 +40,18 @@ internal class Text
     public void AddToFramebuffer(ref FrameBuffer frameBuffer)
     {
         // Squelette
+        AddText(ref frameBuffer);
     }
 
-    public void AddText(string text, int positionX, int positionY, int frontColor, int backColor, ref FrameBuffer framebuffer)
+    private void AddText(ref FrameBuffer framebuffer)
     {
-        for (int i = 0; i < text.Length; i++)
+        for (int i = 0; i < _text.Length; i++)
         {
-            AddCar(text[i], positionX + i * 7, positionY, frontColor, backColor, ref framebuffer);
+            AddCar(_text[i], _positionX + i * 7, _positionY, _frontColor, _backColor, ref framebuffer);
         }
     }
 
-    public void AddCar(char c, int positionX, int positionY, int frontColor, int backColor, ref FrameBuffer framebuffer)
+    private void AddCar(char c, int positionX, int positionY, int frontColor, int backColor, ref FrameBuffer framebuffer)
     {
         if (!Font.Font8x7.TryGetValue(c, out var glyph))
             return;
