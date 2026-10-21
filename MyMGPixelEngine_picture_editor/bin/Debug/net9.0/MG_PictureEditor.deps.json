@@ -23,7 +23,8 @@
         "runtime": {
           "lib/net8.0/MonoGame.Framework.dll": {
             "assemblyVersion": "3.8.6.0",
-            "fileVersion": "3.8.6.0"
+            "fileVersion": "3.8.6.0",
+            "localPath": "MonoGame.Framework.dll"
           }
         }
       },
@@ -32,62 +33,74 @@
           "runtimes/android-arm/native/libopenal.so": {
             "rid": "android-arm",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/android-arm/native/libopenal.so"
           },
           "runtimes/android-arm64/native/libopenal.so": {
             "rid": "android-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/android-arm64/native/libopenal.so"
           },
           "runtimes/android-x64/native/libopenal.so": {
             "rid": "android-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/android-x64/native/libopenal.so"
           },
           "runtimes/android-x86/native/libopenal.so": {
             "rid": "android-x86",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/android-x86/native/libopenal.so"
           },
           "runtimes/ios-arm64/native/libopenal.a": {
             "rid": "ios-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/ios-arm64/native/libopenal.a"
           },
           "runtimes/iossimulator-arm64/native/libopenal.a": {
             "rid": "iossimulator-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/iossimulator-arm64/native/libopenal.a"
           },
           "runtimes/iossimulator-x64/native/libopenal.a": {
             "rid": "iossimulator-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/iossimulator-x64/native/libopenal.a"
           },
           "runtimes/linux-arm64/native/libopenal.so": {
             "rid": "linux-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/linux-arm64/native/libopenal.so"
           },
           "runtimes/linux-x64/native/libopenal.so": {
             "rid": "linux-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/linux-x64/native/libopenal.so"
           },
           "runtimes/osx/native/libopenal.dylib": {
             "rid": "osx",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/osx/native/libopenal.dylib"
           },
           "runtimes/win-arm64/native/openal.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "1.24.3.0"
+            "fileVersion": "1.24.3.0",
+            "localPath": "runtimes/win-arm64/native/openal.dll"
           },
           "runtimes/win-x64/native/openal.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "1.24.3.0"
+            "fileVersion": "1.24.3.0",
+            "localPath": "runtimes/win-x64/native/openal.dll"
           }
         }
       },
@@ -96,27 +109,32 @@
           "runtimes/linux-arm64/native/libSDL2-2.0.so.0": {
             "rid": "linux-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/linux-arm64/native/libSDL2-2.0.so.0"
           },
           "runtimes/linux-x64/native/libSDL2-2.0.so.0": {
             "rid": "linux-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/linux-x64/native/libSDL2-2.0.so.0"
           },
           "runtimes/osx/native/libSDL2-2.0.0.dylib": {
             "rid": "osx",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "0.0.0.0",
+            "localPath": "runtimes/osx/native/libSDL2-2.0.0.dylib"
           },
           "runtimes/win-arm64/native/SDL2.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "2.32.10.0"
+            "fileVersion": "2.32.10.0",
+            "localPath": "runtimes/win-arm64/native/SDL2.dll"
           },
           "runtimes/win-x64/native/SDL2.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "2.32.10.0"
+            "fileVersion": "2.32.10.0",
+            "localPath": "runtimes/win-x64/native/SDL2.dll"
           }
         }
       },
@@ -124,7 +142,8 @@
         "runtime": {
           "lib/netstandard2.0/NVorbis.dll": {
             "assemblyVersion": "0.10.4.0",
-            "fileVersion": "0.10.4.0"
+            "fileVersion": "0.10.4.0",
+            "localPath": "NVorbis.dll"
           }
         }
       }

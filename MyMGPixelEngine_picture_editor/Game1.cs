@@ -113,6 +113,10 @@ public class Game1 : Game
         // UI
         refreshFramebufferUI();
 
+        Sprite sp = new Sprite(@"pictures/test");
+        sp.SetPosition(15, 50);
+        sp.AddToFramebuffer(ref framebuffer);
+
         // Chargement du framebuffer dans la texture à déssiner
         framebuffer.Upload();
         // OBLIGATOIRE : Sauvegarder l'état pour la frame suivante
