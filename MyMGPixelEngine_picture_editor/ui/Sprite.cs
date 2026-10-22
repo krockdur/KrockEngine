@@ -24,6 +24,15 @@ internal class Sprite
         this._positionY = 0;
     }
 
+    public Sprite(string filepath, int positionX, int positionY)
+    {
+        _pixelmap = new PixelMap(filepath);
+        this._width = _pixelmap.Width;
+        this._height = _pixelmap.Height;
+        this._positionX = positionX;
+        this._positionY = positionY;
+    }
+
     public Sprite(int width, int height, int[,] tabPixel)
     {
         _pixelmap = new PixelMap(width, height, tabPixel);

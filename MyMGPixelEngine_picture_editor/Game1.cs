@@ -9,6 +9,7 @@ namespace MyMGPixelEngine;
 
 public class Game1 : Game
 {
+    private SceneManager _sceneManager;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -20,8 +21,9 @@ public class Game1 : Game
 
 
     Button[] buttons;
+    Sprite[] sprites;
     Text textHour1;
-
+    
 
     public Game1()
     {
@@ -29,6 +31,8 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = Config.WINDOW_WIDTH * Config.SCALE;
         _graphics.PreferredBackBufferHeight = Config.WINDOW_HEIGHT * Config.SCALE;
         Content.RootDirectory = "Content";
+
+        _sceneManager = new SceneManager();
         IsMouseVisible = true;
     }
 
@@ -39,7 +43,10 @@ public class Game1 : Game
         framebuffer = new FrameBuffer(GraphicsDevice, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         framebuffer.Clear();
 
+        _sceneManager.Initialize();
+
         initializeUI();
+        initializeSprites();
 
         base.Initialize();
     }
@@ -47,8 +54,8 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
         // TODO: use this.Content to load your game content here
+        _sceneManager.LoadContent();
     }
 
 
@@ -112,10 +119,11 @@ public class Game1 : Game
 
         // UI
         refreshFramebufferUI();
+        // SPRITES
+        refreshFramebufferSprites();
 
-        Sprite sp = new Sprite(@"pictures/test");
-        sp.SetPosition(15, 50);
-        sp.AddToFramebuffer(ref framebuffer);
+
+        
 
         // Chargement du framebuffer dans la texture à déssiner
         framebuffer.Upload();
@@ -148,6 +156,13 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 
+    private void initializeSprites()
+    {
+        sprites = new Sprite[]
+        {
+            new Sprite(@"pictures/test", 50, 100)
+        };
+    }
     private void initializeUI()
     {
         buttons = new Button[]
@@ -162,6 +177,13 @@ public class Game1 : Game
         };
 
         textHour1 = new Text("", 100, 75, 1, ColorList.White, ColorList.Black);
+    }
+    private void refreshFramebufferSprites()
+    {
+        foreach (var sprite in sprites)
+        {
+            sprite.AddToFramebuffer(ref framebuffer);
+        }
     }
     private void refreshFramebufferUI()
     {
