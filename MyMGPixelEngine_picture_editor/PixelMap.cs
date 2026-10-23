@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.IO;
 
+namespace MyMGPixelEngine;
 // Classe représentant une carte de pixels
 internal class PixelMap
 {

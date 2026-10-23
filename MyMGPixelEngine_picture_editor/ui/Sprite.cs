@@ -1,7 +1,7 @@
 
 
 using System.IO;
-using MyMGPixelEngine;
+namespace MyMGPixelEngine;
 
 internal class Sprite
 {

@@ -10,20 +10,10 @@ namespace MyMGPixelEngine;
 public class Game1 : Game
 {
     private SceneManager _sceneManager;
-
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
     private FrameBuffer framebuffer;
 
-
-    PixelMap myPicture;
-
-
-    Button[] buttons;
-    Sprite[] sprites;
-    Text textHour1;
-    
 
     public Game1()
     {
@@ -40,13 +30,16 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
 
+
         framebuffer = new FrameBuffer(GraphicsDevice, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         framebuffer.Clear();
 
-        _sceneManager.Initialize();
+        // Création des scènes
+        _sceneManager.AddScene("menu", new MenuScene());
+        _sceneManager.AddScene("level1", new Level1Scene());
 
-        initializeUI();
-        initializeSprites();
+        // choix d'une scène
+        _sceneManager.Change("menu");
 
         base.Initialize();
     }
@@ -55,15 +48,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         // TODO: use this.Content to load your game content here
-        _sceneManager.LoadContent();
     }
 
-
-
-    int pos_pixel_x, pos_pixel_y = 0;
-    double time_elapsed = 0;
-    int activeColor = ColorList.White;
-    private MouseState _previousMouseState;
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -71,64 +57,13 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
 
-        if (Keyboard.GetState().IsKeyDown(Keys.D1))
-        {
-            activeColor = ColorList.White;
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.D2))
-        {
-            activeColor = ColorList.Red;
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.D3))
-        {
-            activeColor = ColorList.Blue;
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.D4))
-        {
-            activeColor = ColorList.Yellow;
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.D5))
-        {
-            activeColor = ColorList.Black;
-        }
-        else if (Keyboard.GetState().IsKeyDown(Keys.F5))
-        {
-            // Save to file
-        }
-
-
-        MouseState mouseState = Mouse.GetState();
-
-        foreach (var button in buttons)
-        {
-            button.Update(mouseState, _previousMouseState);
-        }
-
-        /*         if (mouseState.LeftButton == ButtonState.Pressed)
-        {
-            framebuffer.SetPixel(mouseState.Position.X / Config.SCALE, mouseState.Position.Y / Config.SCALE, activeColor);
-        } */
-
-        foreach (var button in buttons)
-        {
-            if (button.IsPressed)
-            {
-                Debug.WriteLine($"boutton appuyé : '{button.Text}'");
-            }
-        }
-
-        // UI
-        refreshFramebufferUI();
-        // SPRITES
-        refreshFramebufferSprites();
-
-
+        _sceneManager.Update(gameTime);
+        framebuffer.Clear();
+        _sceneManager.Draw(ref framebuffer);
         
 
         // Chargement du framebuffer dans la texture à déssiner
         framebuffer.Upload();
-        // OBLIGATOIRE : Sauvegarder l'état pour la frame suivante
-        _previousMouseState = mouseState;
 
         base.Update(gameTime);
     }
@@ -156,50 +91,4 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 
-    private void initializeSprites()
-    {
-        sprites = new Sprite[]
-        {
-            new Sprite(@"pictures/test", 50, 100)
-        };
-    }
-    private void initializeUI()
-    {
-        buttons = new Button[]
-        {
-            new Button(0,   0,      50, 15, "UN", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(0,   50,     50, 15, "DEUX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(0,  100,    50, 15, "TROIS", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(100,   0,      50, 15, "QUATRE", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(100,  50,     50, 15, "CINQ", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-            new Button(100,  100,    50, 15, "SIX", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
-
-        };
-
-        textHour1 = new Text("", 100, 75, 1, ColorList.White, ColorList.Black);
-    }
-    private void refreshFramebufferSprites()
-    {
-        foreach (var sprite in sprites)
-        {
-            sprite.AddToFramebuffer(ref framebuffer);
-        }
-    }
-    private void refreshFramebufferUI()
-    {
-        foreach (var button in buttons)
-        {
-            //framebuffer.addButton(button);
-            button.AddToFramebuffer(ref framebuffer);
-
-            string tmp = DateTime.Now.Hour.ToString().ToUpper()
-            + " : " + DateTime.Now.Minute.ToString().ToUpper()
-            + " : " + DateTime.Now.Second.ToString().ToUpper();
-
-            textHour1.SetText(tmp);
-
-            textHour1.SetBackColor(ColorList.Blue);
-            textHour1.AddToFramebuffer(ref framebuffer);
-        }
-    }
 }

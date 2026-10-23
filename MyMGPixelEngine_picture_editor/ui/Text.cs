@@ -1,4 +1,4 @@
-using MyMGPixelEngine;
+namespace MyMGPixelEngine;
 
 internal class Text
 {

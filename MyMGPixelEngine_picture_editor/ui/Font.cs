@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+namespace MyMGPixelEngine;
 public static class Font
 {
     public static readonly Dictionary<char, byte[]> Font8x7 = new()

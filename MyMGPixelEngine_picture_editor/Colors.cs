@@ -1,3 +1,5 @@
+namespace MyMGPixelEngine;
+
 public static class ColorList
 {
     public const int Black = 0;
