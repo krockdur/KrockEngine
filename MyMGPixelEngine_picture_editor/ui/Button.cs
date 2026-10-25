@@ -81,7 +81,7 @@ internal class Button
                 {
                     _pixelsButton[j, i] = (_isHover) ? _pressBorderColor : _borderColor;
                 }
-                    
+
             }
         }
 
@@ -137,19 +137,38 @@ internal class Button
         int mouseX = currentMouseState.Position.X / Config.SCALE;
         int mouseY = currentMouseState.Position.Y / Config.SCALE;
 
-        
-        // 
+
+        /*         // 
+                _isHover = mouseX >= _position_x && mouseX < _position_x + _width &&
+                                 mouseY >= _position_y && mouseY < _position_y + _height;
+                if (_isHover)
+                {
+                    make();
+                    _wasIsHover = true;        
+                }
+                if (!_isHover && _wasIsHover)
+                {
+                    make();
+                    _wasIsHover = false;
+                }
+
+                // Déclenché à l'instant exact où le bouton est appuyé
+                if (_isHover &&
+                    currentMouseState.LeftButton == ButtonState.Pressed &&
+                    previousMouseState.LeftButton == ButtonState.Released)
+                {
+                    IsPressed = true;
+                } */
+
+
+        bool wasHover = _isHover;
         _isHover = mouseX >= _position_x && mouseX < _position_x + _width &&
-                         mouseY >= _position_y && mouseY < _position_y + _height;
-        if (_isHover)
+                   mouseY >= _position_y && mouseY < _position_y + _height;
+
+        // Redessiner uniquement si l'état de survol change pour économiser des ressources
+        if (_isHover != wasHover)
         {
             make();
-            _wasIsHover = true;        
-        }
-        if (!_isHover && _wasIsHover)
-        {
-            make();
-            _wasIsHover = false;
         }
 
         // Déclenché à l'instant exact où le bouton est appuyé

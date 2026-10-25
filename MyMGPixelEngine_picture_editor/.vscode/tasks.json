@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "dotnet: build Release",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceFolder}/MG_PictureEditor.csproj",
+                "/property:GenerateFullPaths=true",
+                "/p:Configuration=Release",
+                "/p:Platform=AnyCPU",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "shell",
+            "label": "dotnet: build Debug",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceFolder}/MG_PictureEditor.csproj",
+                "/property:GenerateFullPaths=true",
+                "/p:Configuration=Debug",
+                "/p:Platform=AnyCPU",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": "build",
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

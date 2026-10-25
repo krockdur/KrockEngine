@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MG_PictureEditor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c864371ea46adc3611bf313b2c06cee77cd126f8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6ac605d92d46c438822622a905fc66ab1d8bd74")]
 [assembly: System.Reflection.AssemblyProductAttribute("MG_PictureEditor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MG_PictureEditor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

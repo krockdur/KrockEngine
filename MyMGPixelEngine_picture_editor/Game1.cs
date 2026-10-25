@@ -20,10 +20,18 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = Config.WINDOW_WIDTH * Config.SCALE;
         _graphics.PreferredBackBufferHeight = Config.WINDOW_HEIGHT * Config.SCALE;
+
+        // Forcer la V-Sync et le pas de temps fixe de manière stricte pour macOS
+        _graphics.SynchronizeWithVerticalRetrace = false;
+        _graphics.ApplyChanges();
+
+        IsMouseVisible = true;
+        IsFixedTimeStep = true;
+        //TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
+
         Content.RootDirectory = "Content";
 
         _sceneManager = new SceneManager();
-        IsMouseVisible = true;
     }
 
     protected override void Initialize()
@@ -37,9 +45,10 @@ public class Game1 : Game
         // Création des scènes
         _sceneManager.AddScene("menu", new MenuScene());
         _sceneManager.AddScene("level1", new Level1Scene());
+        _sceneManager.AddScene("editor_menu", new EditorMenuScene());
 
         // choix d'une scène
-        _sceneManager.Change("menu");
+        _sceneManager.Change("editor_menu");
 
         base.Initialize();
     }
@@ -60,7 +69,7 @@ public class Game1 : Game
         _sceneManager.Update(gameTime);
         framebuffer.Clear();
         _sceneManager.Draw(ref framebuffer);
-        
+
 
         // Chargement du framebuffer dans la texture à déssiner
         framebuffer.Upload();
