@@ -39,7 +39,28 @@ internal class EditorMenuScene : Scene
         {
             if (button.IsPressed)
             {
-                Debug.WriteLine($"boutton appuyé : '{button.Text}'");
+                switch (button.Text)
+                {
+                    case "8 X 8":
+                    sceneManager.Change("editor_8x8");
+                    break;
+                    case "16 X 16":
+                    sceneManager.Change("editor_16x16");
+                    break;
+                    case "32 x 32":
+                    sceneManager.Change("editor_32x32");
+                    break;
+                    case "64 X 64":
+                    sceneManager.Change("editor_64x64");
+                    break;
+                    case "128 X 128":
+                    sceneManager.Change("editor_128x128");
+                    break;
+                    case "OPEN":
+                    break;
+                    case "EXIT":
+                    break;
+                }
             }
         }
 

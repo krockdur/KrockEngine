@@ -46,6 +46,7 @@ public class Game1 : Game
         _sceneManager.AddScene("menu", new MenuScene());
         _sceneManager.AddScene("level1", new Level1Scene());
         _sceneManager.AddScene("editor_menu", new EditorMenuScene());
+        _sceneManager.AddScene("editor_8x8", new Editor8x8Scene());
 
         // choix d'une scène
         _sceneManager.Change("editor_menu");
