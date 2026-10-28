@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyMGPixelEngine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1806dbf721b7282e3367131af61eb994727db3a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+207e9e698ee6968aa723c274982badb0bd39a502")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyMGPixelEngine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyMGPixelEngine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
