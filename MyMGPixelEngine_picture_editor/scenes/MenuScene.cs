@@ -8,7 +8,7 @@ namespace MyMGPixelEngine;
 internal class MenuScene : Scene
 {
     private Button[] _buttons;
-    public override void Initialize()
+    public override void Initialize(object payload = null)
     {
         _buttons = new Button[]
         {

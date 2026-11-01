@@ -1,55 +1,299 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-using MyMGPixelEngine;
+namespace MyMGPixelEngine;
+
 
 internal class EditorScene : Scene
 {
-        Sprite mSprite;
 
-    public override void Initialize()
+    Sprite back_draw_zone_sprite;
+
+    private int _pixelSize = 8;
+
+    private Button[] _buttons;
+    Textbox testTextbox;
+
+    private List<Pixel> _pixelsList = new List<Pixel>();
+    private int[,] tabPixelsToSave;
+    private const int EDITOR_EDGE_SURFACE = 128;
+    private const int EDITOR_COLOR_SURFACE = 1;
+    public override void Initialize(object payload = null)
     {
+        EditorPayload editorPayload = (EditorPayload)payload;
 
-        mSprite = new Sprite(@"pictures/test", 50, 100);
+        _pixelSize = editorPayload.NbEdgePixels;
+
+        if (editorPayload.TabPixels != null) //Loading file
+        {
+            tabPixelsToSave = editorPayload.TabPixels;
 
 
+            for (int index_j = 0; index_j <= EDITOR_COLOR_SURFACE / _pixelSize; index_j++)
+            {
+                for (int index_i = 0; index_i <= EDITOR_COLOR_SURFACE / _pixelSize; index_i++)
+                {
+                    int caseX = index_i;
+                    int caseY = index_j;
+
+
+                    for (int i = 0; i < _pixelSize; i++)
+                    {
+                        for (int j = 0; j < _pixelSize; j++)
+                        {
+                            _pixelsList.Add(new Pixel(caseX * _pixelSize + j, caseY * _pixelSize + i, _colorPicked));
+                        }
+                    }
+
+                    // renseigner le tableau à sauvegarder dans un fichier
+                    tabPixelsToSave[caseY, caseX] = _colorPicked;
+                }
+            }
+
+
+
+
+
+
+
+
+        }
+        else //new file
+        {
+            // INIT tabPixelsToSave
+            tabPixelsToSave = new int[EDITOR_EDGE_SURFACE / _pixelSize, EDITOR_EDGE_SURFACE / _pixelSize];
+            for (int j = 0; j < EDITOR_EDGE_SURFACE / _pixelSize; j++)
+            {
+                for (int i = 0; i < EDITOR_EDGE_SURFACE / _pixelSize; i++)
+                {
+                    tabPixelsToSave[j, i] = EDITOR_COLOR_SURFACE;
+                }
+            }
+            //-------------------------
+        }
+
+
+        back_draw_zone_sprite = new Sprite(@"pictures/8x8_interface", 0, 0);
+
+
+
+        _buttons = new Button[]
+        {
+            // Couleurs
+            new Button(150, 0, 10, 10, "Black", ColorList.White, ColorList.Black, ColorList.Red, ColorList.Red, ColorList.Black, ColorList.Red),
+            new Button(150, 10, 10, 10, "Brown", ColorList.White, ColorList.Brown, ColorList.Red, ColorList.Red, ColorList.Brown, ColorList.Red),
+            new Button(150, 20, 10, 10, "Red", ColorList.White, ColorList.Red, ColorList.Red, ColorList.Red, ColorList.Red, ColorList.Red),
+            new Button(150, 30, 10, 10, "Blue", ColorList.White, ColorList.Blue, ColorList.Red, ColorList.Red, ColorList.Blue, ColorList.Red),
+            new Button(150, 40, 10, 10, "MidnightBlue", ColorList.White, ColorList.MidnightBlue, ColorList.Red, ColorList.Red, ColorList.MidnightBlue, ColorList.Red),
+            new Button(150, 50, 10, 10, "TaupeGray", ColorList.White, ColorList.TaupeGray, ColorList.Red, ColorList.Red, ColorList.TaupeGray, ColorList.Red),
+            new Button(150, 60, 10, 10, "Orange", ColorList.White, ColorList.Orange, ColorList.Red, ColorList.Red, ColorList.Orange, ColorList.Red),
+            new Button(150, 70, 10, 10, "DarkGray", ColorList.White, ColorList.DarkGray, ColorList.Red, ColorList.Red, ColorList.DarkGray, ColorList.Red),
+
+            new Button(160, 0, 10, 10, "Purple", ColorList.White, ColorList.Purple, ColorList.Red, ColorList.Red, ColorList.Purple, ColorList.Red),
+            new Button(160, 10, 10, 10, "LightGray", ColorList.White, ColorList.LightGray, ColorList.Red, ColorList.Red, ColorList.LightGray, ColorList.Red),
+            new Button(160, 20, 10, 10, "Yellow", ColorList.White, ColorList.Yellow, ColorList.Red, ColorList.Red, ColorList.Yellow, ColorList.Red),
+            new Button(160, 30, 10, 10, "Pink", ColorList.White, ColorList.Pink, ColorList.Red, ColorList.Red, ColorList.Pink, ColorList.Red),
+            new Button(160, 40, 10, 10, "ForestGreen", ColorList.White, ColorList.ForestGreen, ColorList.Red, ColorList.Red, ColorList.ForestGreen, ColorList.Red),
+            new Button(160, 50, 10, 10, "White", ColorList.White, ColorList.White, ColorList.Red, ColorList.Red, ColorList.White, ColorList.Red),
+            new Button(160, 60, 10, 10, "Green", ColorList.White, ColorList.Green, ColorList.Red, ColorList.Red, ColorList.Green, ColorList.Red),
+            new Button(160, 70, 10, 10, "Peach", ColorList.White, ColorList.Peach, ColorList.Red, ColorList.Red, ColorList.Peach, ColorList.Red),
+
+            new Button(10, 140, 40, 15, "SAVE", ColorList.White, ColorList.LightGray, ColorList.Black, ColorList.Red, ColorList.DarkGray, ColorList.Black)
+
+        };
+
+        testTextbox = new Textbox(100, 140, 50, 15, ColorList.Blue, ColorList.Yellow, ColorList.Black, ColorList.Red, ColorList.White);
     }
 
     public override void LoadContent()
     {
+        // initial load content
 
     }
 
-    float posX = 0f;
-    float posY = 0f;
+    int clickPositonX = 0;
+    int clickPositonY = 0;
+
+    private int _colorPicked = 0;
+    private MouseState _previousMouseState;
     public override void Update(GameTime gameTime, SceneManager sceneManager)
     {
-        if (Keyboard.GetState().IsKeyDown(Keys.Q))
+        MouseState mouseState = Mouse.GetState();
+        foreach (var button in _buttons)
         {
-            posX -= 0.5f;
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.D))
-        {
-            posX += 0.5f;
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.Z))
-        {
-            posY -= 0.5f;
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.S))
-        {
-            posY += 0.5f;
+            button.Update(mouseState, _previousMouseState);
         }
 
-        mSprite.SetPosition((int)posX, (int)posY);
+        testTextbox.Update(mouseState, _previousMouseState);
+
+        if (mouseState.LeftButton == ButtonState.Pressed)
+        {
+            clickPositonX = mouseState.Position.X / Config.SCALE;
+            clickPositonY = mouseState.Position.Y / Config.SCALE;
+            int caseX = clickPositonX / _pixelSize;
+            int caseY = clickPositonY / _pixelSize;
+
+            if (clickPositonX >= 0 && clickPositonX <= 128 && clickPositonY >= 0 && clickPositonY <= 128)
+            {
+
+                for (int i = 0; i < _pixelSize; i++)
+                {
+                    for (int j = 0; j < _pixelSize; j++)
+                    {
+                        _pixelsList.Add(new Pixel(caseX * _pixelSize + j, caseY * _pixelSize + i, _colorPicked));
+                    }
+                }
+
+                // renseigner le tableau à sauvegarder dans un fichier
+                tabPixelsToSave[caseY, caseX] = _colorPicked;
+
+            }
+
+        }
+
+        foreach (var button in _buttons)
+        {
+            if (button.IsPressed)
+            {
+                switch (button.Text)
+                {
+                    case "Black":
+                        _colorPicked = ColorList.Black;
+                        break;
+                    case "Brown":
+                        _colorPicked = ColorList.Brown;
+                        break;
+                    case "Red":
+                        _colorPicked = ColorList.Red;
+                        break;
+                    case "Blue":
+                        _colorPicked = ColorList.Blue;
+                        break;
+                    case "MidnightBlue":
+                        _colorPicked = ColorList.MidnightBlue;
+                        break;
+                    case "TaupeGray":
+                        _colorPicked = ColorList.TaupeGray;
+                        break;
+                    case "Orange":
+                        _colorPicked = ColorList.Orange;
+                        break;
+                    case "DarkGray":
+                        _colorPicked = ColorList.DarkGray;
+                        break;
+                    case "Purple":
+                        _colorPicked = ColorList.Purple;
+                        break;
+                    case "LightGray":
+                        _colorPicked = ColorList.LightGray;
+                        break;
+                    case "Yellow":
+                        _colorPicked = ColorList.Yellow;
+                        break;
+                    case "Pink":
+                        _colorPicked = ColorList.Pink;
+                        break;
+                    case "ForestGreen":
+                        _colorPicked = ColorList.ForestGreen;
+                        break;
+                    case "White":
+                        _colorPicked = ColorList.White;
+                        break;
+                    case "Green":
+                        _colorPicked = ColorList.Green;
+                        break;
+                    case "Peach":
+                        _colorPicked = ColorList.Peach;
+                        break;
+                    case "SAVE":
+                        PrepareSave();
+                        break;
+                }
+            }
+        }
+        _previousMouseState = mouseState;
     }
-
     public override void Draw(ref FrameBuffer framebuffer)
     {
 
-        mSprite.AddToFramebuffer(ref framebuffer);
+        back_draw_zone_sprite.AddToFramebuffer(ref framebuffer);
+
+        foreach (Pixel pixel in _pixelsList)
+        {
+            framebuffer.SetPixel(pixel.X, pixel.Y, pixel.Color);
+
+        }
+
+        foreach (var button in _buttons)
+        {
+            button.AddToFramebuffer(ref framebuffer);
+        }
+
+        testTextbox.AddToFramebuffer(ref framebuffer);
 
 
+    }
+
+    private void PrepareSave()
+    {
+        if (testTextbox.Text != null && testTextbox.Text.Length > 0)
+        {
+            Save(EDITOR_EDGE_SURFACE / _pixelSize, EDITOR_EDGE_SURFACE / _pixelSize, tabPixelsToSave, testTextbox.Text);
+        }
+    }
+
+    private void Save(int width, int height, int[,] tabPixel, string filename)
+    {
+        string filePath = "pictures/" + filename;
+
+        try
+        {
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                // Ligne 1 : Nombre de colonnes
+                writer.WriteLine(width);
+
+                // Ligne 2 : Nombre de lignes
+                writer.WriteLine(height);
+
+                // Lignes suivantes : Chaque ligne du tableau
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        writer.Write(tabPixel[i, j]);
+
+                        // Ajoute un espace entre les colonnes, sauf après la dernière
+                        if (j < width - 1)
+                        {
+                            writer.Write(" ");
+                        }
+                    }
+                    // Retour à la ligne après chaque ligne du tableau
+                    writer.WriteLine();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Erreur lors de l'écriture : " + ex.Message);
+        }
+    }
+}
+
+internal class Pixel
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+    public int Color { get; set; }
+    public Pixel(int x, int y, int color)
+    {
+        X = x;
+        Y = y;
+        Color = color;
     }
 }

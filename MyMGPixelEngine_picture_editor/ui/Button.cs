@@ -85,7 +85,7 @@ internal class Button
             }
         }
 
-        int textPixelsLength = Text.Length * 7; // longueur en pixel du text
+        int textPixelsLength = Text.Length * 8; // longueur en pixel du text
 
         // le texte ne peut pas sortir du bouton
         if (textPixelsLength <= _width)
@@ -136,30 +136,6 @@ internal class Button
 
         int mouseX = currentMouseState.Position.X / Config.SCALE;
         int mouseY = currentMouseState.Position.Y / Config.SCALE;
-
-
-        /*         // 
-                _isHover = mouseX >= _position_x && mouseX < _position_x + _width &&
-                                 mouseY >= _position_y && mouseY < _position_y + _height;
-                if (_isHover)
-                {
-                    make();
-                    _wasIsHover = true;        
-                }
-                if (!_isHover && _wasIsHover)
-                {
-                    make();
-                    _wasIsHover = false;
-                }
-
-                // Déclenché à l'instant exact où le bouton est appuyé
-                if (_isHover &&
-                    currentMouseState.LeftButton == ButtonState.Pressed &&
-                    previousMouseState.LeftButton == ButtonState.Released)
-                {
-                    IsPressed = true;
-                } */
-
 
         bool wasHover = _isHover;
         _isHover = mouseX >= _position_x && mouseX < _position_x + _width &&

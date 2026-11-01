@@ -9,7 +9,7 @@ internal class Level1Scene : Scene
 {
     Sprite mSprite;
 
-    public override void Initialize()
+    public override void Initialize(object payload = null)
     {
 
         mSprite = new Sprite(@"pictures/test", 50, 100);

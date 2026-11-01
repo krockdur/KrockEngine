@@ -19,7 +19,7 @@ internal class SceneManager
     }
 
     // Change la scène active par sa clé
-    public void Change(string key)
+    public void Change(string key, object payload = null)
     {
         if (_scenes.ContainsKey(key))
         {
@@ -27,7 +27,7 @@ internal class SceneManager
             _activeScene = _scenes[key];
 
             // Initialisation et chargement automatiques lors du changement (optionnel mais propre)
-            _activeScene.Initialize();
+            _activeScene.Initialize(payload);
             _activeScene.LoadContent();
         }
     }
@@ -56,7 +56,7 @@ internal class SceneManager
 internal abstract class Scene
 {
     // Initialisation des variables propres à la scène
-    public virtual void Initialize() { }
+    public virtual void Initialize(object payload = null) { }
 
     // Chargement des ressources (sprites, etc.)
     public virtual void LoadContent() { }

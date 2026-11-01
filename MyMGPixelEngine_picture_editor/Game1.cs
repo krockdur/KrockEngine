@@ -46,7 +46,7 @@ public class Game1 : Game
         _sceneManager.AddScene("menu", new MenuScene());
         _sceneManager.AddScene("level1", new Level1Scene());
         _sceneManager.AddScene("editor_menu", new EditorMenuScene());
-        _sceneManager.AddScene("editor_8x8", new Editor8x8Scene());
+        _sceneManager.AddScene("editor", new EditorScene());
 
         // choix d'une scène
         _sceneManager.Change("editor_menu");
@@ -86,13 +86,11 @@ public class Game1 : Game
 
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
+        Rectangle destinationRectangle = new Rectangle(0, 0, Config.WINDOW_WIDTH * Config.SCALE, Config.WINDOW_HEIGHT * Config.SCALE);
+
         _spriteBatch.Draw(
             framebuffer.Texture,
-            new Rectangle(
-                0,
-                0,
-                GraphicsDevice.Viewport.Width,
-                GraphicsDevice.Viewport.Height),
+            destinationRectangle,
             Color.White);
 
         _spriteBatch.End();

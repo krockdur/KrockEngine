@@ -8,7 +8,7 @@ namespace MyMGPixelEngine;
 internal class EmptyScene : Scene
 {
 
-    public override void Initialize()
+    public override void Initialize(object payload = null)
     {
 
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.IO;
 
@@ -32,7 +33,7 @@ internal class PixelMap
         SetPictureFromFile(path);
     }
 
-    public void SetPictureFromFile(string path)
+    public void SetPictureFromFile_old(string path)
     {
         using (StreamReader reader = new StreamReader(path))
         {
@@ -60,6 +61,44 @@ internal class PixelMap
             }
         }
     }
+
+    public void SetPictureFromFile(string path)
+    {
+        using (StreamReader reader = new StreamReader(path))
+        {
+            // Lecture de la largeur et de la hauteur
+            string widthLine = reader.ReadLine();
+            string heightLine = reader.ReadLine();
+
+            if (widthLine != null && heightLine != null)
+            {
+                Width = int.Parse(widthLine);
+                Height = int.Parse(heightLine);
+
+                // Initialisation du tableau de pixels
+                this.picture = new int[Height, Width];
+
+                int j = 0;
+                string line;
+
+                // On lit les lignes jusqu'à atteindre la hauteur demandée
+                while (j < Height && (line = reader.ReadLine()) != null)
+                {
+                    // On découpe la ligne par les espaces
+                    // StringSplitOptions.RemoveEmptyEntries permet d'ignorer les espaces doubles
+                    string[] values = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < Width && i < values.Length; i++)
+                    {
+                        // On convertit chaque élément du tableau de mots en entier
+                        this.picture[j, i] = int.Parse(values[i]);
+                    }
+                    j++;
+                }
+            }
+        }
+    }
+
 
     public void save(string path)
     {

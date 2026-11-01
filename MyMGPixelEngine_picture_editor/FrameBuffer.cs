@@ -326,19 +326,52 @@ internal class FrameBuffer
             switch (mapbuffer[i])
             {
                 case ColorList.Black:
-                    pixels[i] = Color.Black;
+                    pixels[i] = new Color(0, 0, 0);
+                    break;
+                case ColorList.MidnightBlue:
+                    pixels[i] = new Color(29, 43, 83);
+                    break;
+                case ColorList.Purple:
+                    pixels[i] = new Color(126, 37, 83);
+                    break;
+                case ColorList.ForestGreen:
+                    pixels[i] = new Color(0, 135, 81);
+                    break;
+                case ColorList.Brown:
+                    pixels[i] = new Color(171, 82, 54);
+                    break;
+                case ColorList.TaupeGray:
+                    pixels[i] = new Color(95, 87, 79);
+                    break;
+                case ColorList.LightGray:
+                    pixels[i] = new Color(194, 195, 199);
                     break;
                 case ColorList.White:
-                    pixels[i] = Color.White;
+                    pixels[i] = new Color(255, 241, 232);
                     break;
                 case ColorList.Red:
-                    pixels[i] = Color.Red;
+                    pixels[i] = new Color(255, 0, 77);
                     break;
-                case ColorList.Blue:
-                    pixels[i] = Color.Blue;
+                case ColorList.Orange:
+                    pixels[i] = new Color(255, 163, 0);
                     break;
                 case ColorList.Yellow:
-                    pixels[i] = Color.Yellow;
+                    pixels[i] = new Color(255, 236, 39);
+                    break;
+                case ColorList.Green:
+                    pixels[i] = new Color(0, 228, 54);
+                    break;
+                case ColorList.Blue:
+                    pixels[i] = new Color(41, 173, 255);
+                    break;
+                case ColorList.DarkGray:
+                    pixels[i] = new Color(131, 118, 156);
+                    break;
+                case ColorList.Pink:
+                    pixels[i] = new Color(255, 119, 168);
+                    break;
+                case ColorList.Peach:
+                    pixels[i] = new Color(255, 204, 170);
                     break;
             }
         }
@@ -346,5 +379,4 @@ internal class FrameBuffer
     }
 
 }
-
 
