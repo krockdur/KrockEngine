@@ -158,7 +158,7 @@ internal class EditorScene : Scene
             int[,] tabPixels = new int[height, width];
             
             int fj = 0;
-            while (sr.ReadLine() != null)
+            while (sr.Peek() > -1)
             {
                 string line = sr.ReadLine();
                 string[] tabLine = line.Split(' ');
@@ -325,7 +325,13 @@ internal class EditorScene : Scene
     {
         if (testTextbox.Text != null && testTextbox.Text.Length > 0)
         {
-            Save(EDITOR_EDGE_PIXELS / _pixelSize, EDITOR_EDGE_PIXELS / _pixelSize, tabPixelsToSave, testTextbox.Text);
+            //Save(EDITOR_EDGE_PIXELS / _pixelSize, EDITOR_EDGE_PIXELS / _pixelSize, tabPixelsToSave, testTextbox.Text);
+            int[,] tabPixelsToSave = new int[_nbPixelsXY, _nbPixelsXY];
+
+            foreach(Pixel pixel in _pixelsList)
+            {
+                tabPixelsToSave[(pixel.Y/_nbPixelsXY)+1, (pixel.X/_nbPixelsXY)+1] = pixel.Color;
+            }
         }
     }
 

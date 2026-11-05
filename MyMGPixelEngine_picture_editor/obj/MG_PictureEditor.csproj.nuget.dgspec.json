@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\krock\\Documents\\GitHub\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {}
+    "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {}
   },
   "projects": {
-    "C:\\Users\\krock\\Documents\\GitHub\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {
+    "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\krock\\Documents\\GitHub\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
+        "projectUniqueName": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
         "projectName": "MG_PictureEditor",
-        "projectPath": "C:\\Users\\krock\\Documents\\GitHub\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
-        "packagesPath": "C:\\Users\\krock\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\krock\\Documents\\GitHub\\KrockEngine\\MyMGPixelEngine_picture_editor\\obj\\",
+        "projectPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\MG_PictureEditor.csproj",
+        "packagesPath": "C:\\Users\\JF\\.nuget\\packages\\",
+        "outputPath": "D:\\DEV\\KrockEngine\\MyMGPixelEngine_picture_editor\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\krock\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\JF\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
