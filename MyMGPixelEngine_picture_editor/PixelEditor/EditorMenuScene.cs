@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.IO;
@@ -10,9 +11,13 @@ internal class EditorMenuScene : Scene
 {
 
     private Button[] _buttons;
-    Textbox tbOpenFile;
+    private Textbox tbOpenFile;
+    private Sprite _bgSprite;
+    private int[,] tabPixelPayload; // tableau de pixels de l'image à transmettre à l'éditeur - a refaire à l'occase
     public override void Initialize(object payload = null)
     {
+        _bgSprite = new Sprite("pictures/chat");
+
         _buttons = new Button[]
         {
             new Button(90, 10, 100, 15, "8 X 8", ColorList.White, ColorList.Yellow, ColorList.Blue, ColorList.Red, ColorList.White, ColorList.Black),
@@ -51,22 +56,22 @@ internal class EditorMenuScene : Scene
                 switch (button.Text)
                 {
                     case "8 X 8":
-                        sceneManager.Change("editor", new EditorPayload(16));
+                        sceneManager.Change("editor", new EditorPayload("8X8"));
                         break;
                     case "16 X 16":
-                        sceneManager.Change("editor", new EditorPayload(8));
+                        sceneManager.Change("editor", new EditorPayload("16X16"));
                         break;
                     case "32 X 32":
-                        sceneManager.Change("editor", new EditorPayload(4));
+                        sceneManager.Change("editor", new EditorPayload("32X32"));
                         break;
                     case "64 X 64":
-                        sceneManager.Change("editor", new EditorPayload(2));
+                        sceneManager.Change("editor", new EditorPayload("64X64"));
                         break;
                     case "128 X 128":
-                        sceneManager.Change("editor", new EditorPayload(1));
+                        sceneManager.Change("editor", new EditorPayload("128X128"));
                         break;
                     case "OPEN":
-                        if (OpenFile(sceneManager)) sceneManager.Change("editor", new EditorPayload(8, tabPixelPayload));
+                        sceneManager.Change("editor", new EditorPayload("", tbOpenFile.Text));
                         break;
                     case "EXIT":
                         break;
@@ -79,38 +84,14 @@ internal class EditorMenuScene : Scene
         _previousMouseState = mouseState;
     }
 
-    int[,] tabPixelPayload;
-    private bool OpenFile(SceneManager sceneManager)
-    {
-        bool success = false;
-        using (StreamReader sr = new StreamReader("pictures/TOTO"))
-        {
-            int pictureWidth = int.Parse(sr.ReadLine());
-            int pictureHeight = int.Parse(sr.ReadLine());
-            tabPixelPayload = new int[pictureHeight, pictureWidth];
+    
 
-            int j = 0;
-            while(sr.ReadLine() != null)
-            {
-                string line = sr.ReadLine();
-                string[] tabLine = line.Split(' ');
-                for (int i = 0; i < tabLine.Length; i++)
-                {
-                    tabPixelPayload[j, i] = int.Parse(tabLine[i]);
-                }
-                j++;
-            }
 
-            if (pictureHeight == 8 && pictureWidth == 8)
-            {
-                success = true;
-            }
-        }
-        return success;
-    }
 
     public override void Draw(ref FrameBuffer framebuffer)
     {
+        _bgSprite.AddToFramebuffer(ref framebuffer);
+
         foreach (var button in _buttons)
         {
             button.AddToFramebuffer(ref framebuffer);
@@ -122,16 +103,14 @@ internal class EditorMenuScene : Scene
 
 internal class EditorPayload
 {
-    public EditorPayload(){}
-    public EditorPayload(int nbEdgePixels)
+    public EditorPayload(string type, string file = null)
     {
-        NbEdgePixels = nbEdgePixels;
+        Type = type;
+        if (file != null)
+        {
+            File = file;
+        }
     }
-    public EditorPayload(int nbEdgePixels, int[,] tabPixels)
-    {
-        NbEdgePixels = nbEdgePixels;
-        TabPixels = tabPixels;
-    }
-    public int NbEdgePixels { get; set; } = 0;
-    public int[,] TabPixels { get; set; } = null;
+    public string Type { get; set; }
+    public string File{ get; set; } = null;
 }

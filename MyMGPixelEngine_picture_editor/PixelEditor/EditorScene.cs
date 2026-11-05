@@ -13,69 +13,35 @@ internal class EditorScene : Scene
 
     Sprite back_draw_zone_sprite;
 
-    private int _pixelSize = 8;
+    private int _pixelSize;     // largeur/hauteur en pixel d'une case dans un carré de 128 pixels 
 
     private Button[] _buttons;
     Textbox testTextbox;
 
     private List<Pixel> _pixelsList = new List<Pixel>();
-    private int[,] tabPixelsToSave;
-    private const int EDITOR_EDGE_SURFACE = 128;
+    //private int[,] tabPixelsToSave;
+    private const int EDITOR_EDGE_PIXELS = 128;
     private const int EDITOR_COLOR_SURFACE = 1;
+    private int _nbPixelsXY; // Nombre de pixels de l'image en X et Y
     public override void Initialize(object payload = null)
     {
+        // Traitement du payload
         EditorPayload editorPayload = (EditorPayload)payload;
-
-        _pixelSize = editorPayload.NbEdgePixels;
-
-        if (editorPayload.TabPixels != null) //Loading file
+        if (editorPayload.File != null && editorPayload.File.Length > 0)
         {
-            tabPixelsToSave = editorPayload.TabPixels;
-
-
-            for (int index_j = 0; index_j <= EDITOR_COLOR_SURFACE / _pixelSize; index_j++)
+            // Cas 1 - Ouverture d'un fichier existant
+            string path = "pictures/" + editorPayload.File;
+            if (File.Exists(path))
             {
-                for (int index_i = 0; index_i <= EDITOR_COLOR_SURFACE / _pixelSize; index_i++)
-                {
-                    int caseX = index_i;
-                    int caseY = index_j;
-
-
-                    for (int i = 0; i < _pixelSize; i++)
-                    {
-                        for (int j = 0; j < _pixelSize; j++)
-                        {
-                            _pixelsList.Add(new Pixel(caseX * _pixelSize + j, caseY * _pixelSize + i, _colorPicked));
-                        }
-                    }
-
-                    // renseigner le tableau à sauvegarder dans un fichier
-                    tabPixelsToSave[caseY, caseX] = _colorPicked;
-                }
+                LoadFile(path);
             }
-
-
-
-
-
-
-
+        }
+        else
+        {
+            // Cas 2 - nouvelle image
+            InitNewImage(editorPayload);
 
         }
-        else //new file
-        {
-            // INIT tabPixelsToSave
-            tabPixelsToSave = new int[EDITOR_EDGE_SURFACE / _pixelSize, EDITOR_EDGE_SURFACE / _pixelSize];
-            for (int j = 0; j < EDITOR_EDGE_SURFACE / _pixelSize; j++)
-            {
-                for (int i = 0; i < EDITOR_EDGE_SURFACE / _pixelSize; i++)
-                {
-                    tabPixelsToSave[j, i] = EDITOR_COLOR_SURFACE;
-                }
-            }
-            //-------------------------
-        }
-
 
         back_draw_zone_sprite = new Sprite(@"pictures/8x8_interface", 0, 0);
 
@@ -109,10 +75,127 @@ internal class EditorScene : Scene
         testTextbox = new Textbox(100, 140, 50, 15, ColorList.Blue, ColorList.Yellow, ColorList.Black, ColorList.Red, ColorList.White);
     }
 
+    private void InitNewImage(EditorPayload editorPayload)
+    {
+        switch (editorPayload.Type)
+        {
+            case "8X8":
+                _pixelSize = 16;
+                break;
+            case "16X16":
+                _pixelSize = 8;
+                break;
+            case "32X32":
+                _pixelSize = 4;
+                break;
+            case "64X64":
+                _pixelSize = 2;
+                break;
+            case "128X128":
+                _pixelSize = 1;
+                break;
+            default:
+                _pixelSize = 16;
+                break;
+        }
+
+        // calcul du nombres de pixels de l'image
+        _nbPixelsXY = EDITOR_EDGE_PIXELS / _pixelSize;
+        // initialisation de _pixelsList
+        // Nouvelle image : on créé une liste de pixels avec la couleur de fond noire.
+        for (int j = 0; j < _nbPixelsXY; j++)
+        {
+            for (int i = 0; i < _nbPixelsXY; i++)
+            {
+                // dans l'éditeur 1 pixel de l'image = x pixels d'affichage suivant le format choisi
+                // donc pour chaque pixel de l'image, il faut créer X pixels pour l'affichage (ex: 1 pixel de l'image = 8 pixels pour une image 8x8)
+                for (int thispix_y = 0; thispix_y < _pixelSize; thispix_y++)
+                {
+                    for (int thispix_x = 0; thispix_x < _pixelSize; thispix_x++)
+                    {
+                        _pixelsList.Add(new Pixel(i * _pixelSize + thispix_x, j * _pixelSize + thispix_y, ColorList.Black));
+                    }
+                }
+
+            }
+        }
+    }
+    private void LoadFile(string file)
+    {
+        using (StreamReader sr = new StreamReader(file))
+        {
+            // retrouver le type de l'image
+            int width = int.Parse(sr.ReadLine());
+            int height = int.Parse(sr.ReadLine());
+            
+            if (width == 8 && height == 8)
+            {
+                _pixelSize = 16;
+            }
+            else if (width == 16 && height == 16)
+            {
+                _pixelSize = 8;
+            }
+            else if (width == 32 && height == 32)
+            {
+                _pixelSize = 4;
+            }
+            else if (width == 64 && height == 64)
+            {
+                _pixelSize = 2;
+            }
+            else if (width == 128 && height == 128)
+            {
+                _pixelSize = 1;
+            }
+            else
+            {
+                InitNewImage(new EditorPayload("8X8"));
+                return;
+            }
+
+            // obtenir le tableau de pixels du fichier
+            int[,] tabPixels = new int[height, width];
+            
+            int fj = 0;
+            while (sr.ReadLine() != null)
+            {
+                string line = sr.ReadLine();
+                string[] tabLine = line.Split(' ');
+                for (int fi = 0; fi < tabLine.Length; fi++)
+                {
+                    tabPixels[fj, fi] = int.Parse(tabLine[fi]);
+                }
+                fj++;
+            }
+
+            // 
+            // MAJ ombres de pixels de l'image
+            _nbPixelsXY = width;
+            // initialisation de _pixelsList
+            // 
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < width; i++)
+                {
+                    // dans l'éditeur 1 pixel de l'image = x pixels d'affichage suivant le format choisi
+                    // donc pour chaque pixel de l'image, il faut créer X pixels pour l'affichage (ex: 1 pixel de l'image = 8 pixels pour une image 8x8)
+                    for (int thispix_y = 0; thispix_y < _pixelSize; thispix_y++)
+                    {
+                        for (int thispix_x = 0; thispix_x < _pixelSize; thispix_x++)
+                        {
+                            _pixelsList.Add(new Pixel(i * _pixelSize + thispix_x, j * _pixelSize + thispix_y, tabPixels[j, i]));
+                        }
+                    }
+
+                }
+            }
+        }
+    }
     public override void LoadContent()
     {
         // initial load content
-
+        //
     }
 
     int clickPositonX = 0;
@@ -149,7 +232,7 @@ internal class EditorScene : Scene
                 }
 
                 // renseigner le tableau à sauvegarder dans un fichier
-                tabPixelsToSave[caseY, caseX] = _colorPicked;
+                //tabPixelsToSave[caseY, caseX] = _colorPicked;
 
             }
 
@@ -242,7 +325,7 @@ internal class EditorScene : Scene
     {
         if (testTextbox.Text != null && testTextbox.Text.Length > 0)
         {
-            Save(EDITOR_EDGE_SURFACE / _pixelSize, EDITOR_EDGE_SURFACE / _pixelSize, tabPixelsToSave, testTextbox.Text);
+            Save(EDITOR_EDGE_PIXELS / _pixelSize, EDITOR_EDGE_PIXELS / _pixelSize, tabPixelsToSave, testTextbox.Text);
         }
     }
 
