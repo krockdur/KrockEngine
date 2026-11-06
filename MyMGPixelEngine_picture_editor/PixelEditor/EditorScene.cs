@@ -127,7 +127,7 @@ internal class EditorScene : Scene
             // retrouver le type de l'image
             int width = int.Parse(sr.ReadLine());
             int height = int.Parse(sr.ReadLine());
-            
+
             if (width == 8 && height == 8)
             {
                 _pixelSize = 16;
@@ -156,7 +156,7 @@ internal class EditorScene : Scene
 
             // obtenir le tableau de pixels du fichier
             int[,] tabPixels = new int[height, width];
-            
+
             int fj = 0;
             while (sr.Peek() > -1)
             {
@@ -328,11 +328,30 @@ internal class EditorScene : Scene
             //Save(EDITOR_EDGE_PIXELS / _pixelSize, EDITOR_EDGE_PIXELS / _pixelSize, tabPixelsToSave, testTextbox.Text);
             int[,] tabPixelsToSave = new int[_nbPixelsXY, _nbPixelsXY];
 
-            foreach(Pixel pixel in _pixelsList)
+            foreach (Pixel pixel in _pixelsList)
             {
-                tabPixelsToSave[(pixel.Y/_nbPixelsXY)+1, (pixel.X/_nbPixelsXY)+1] = pixel.Color;
+                tabPixelsToSave[(pixel.Y / _pixelSize), (pixel.X / _pixelSize)] = pixel.Color;
             }
+
+            for (int y = 0; y < _nbPixelsXY; y++)
+            {
+                for (int x = 0; x < _nbPixelsXY; x++)
+                {
+                    foreach (Pixel pixel in _pixelsList)
+                    {
+                        if ((pixel.X == (x + 1) * _pixelSize) && (pixel.Y == (y + 1) * _pixelSize))
+                        {
+                            tabPixelsToSave[y, x] = pixel.Color;
+                        }
+                    }
+                }
+            }
+
+            Save(_nbPixelsXY, _nbPixelsXY, tabPixelsToSave, testTextbox.Text);
+
         }
+
+
     }
 
     private void Save(int width, int height, int[,] tabPixel, string filename)
