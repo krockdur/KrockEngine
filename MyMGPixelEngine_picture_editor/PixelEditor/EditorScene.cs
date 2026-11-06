@@ -22,6 +22,7 @@ internal class EditorScene : Scene
     //private int[,] tabPixelsToSave;
     private const int EDITOR_EDGE_PIXELS = 128;
     private const int EDITOR_COLOR_SURFACE = 1;
+    private int _backgroundColor = ColorList.White;
     private int _nbPixelsXY; // Nombre de pixels de l'image en X et Y
     public override void Initialize(object payload = null)
     {
@@ -113,7 +114,7 @@ internal class EditorScene : Scene
                 {
                     for (int thispix_x = 0; thispix_x < _pixelSize; thispix_x++)
                     {
-                        _pixelsList.Add(new Pixel(i * _pixelSize + thispix_x, j * _pixelSize + thispix_y, ColorList.Black));
+                        _pixelsList.Add(new Pixel(i * _pixelSize + thispix_x, j * _pixelSize + thispix_y, _backgroundColor));
                     }
                 }
 
